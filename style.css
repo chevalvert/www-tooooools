@@ -8,6 +8,8 @@
   font-style: normal;
 }
 
+*{box-sizing:border-box}
+
 body {
 	font-family: 'Friction Mono', monospace;
 	text-rendering: optimizeLegibility;
@@ -27,19 +29,20 @@ p, form{
 }
 
 input {
-	  background-color: #FFF;
-	  border: none;
-	  color: #111;
-	  padding: 1.5vw 2.5vw;
-	  text-decoration: none;
-	  display: inline-block;
-	  font-size: 16px;
-	  margin: 4px 2px;
+	float: left;
+	font-family: 'Friction Mono', monospace;
+	background-color: #fff;
+	color: #111;
+	padding: 1.5vw 2.5vw;
+	text-decoration: none;
+	font-size: 1.5vw;
+	min-height: 5vw;
 }
 
 .button{
-	  cursor: pointer;
-	  background-color: #71f4bd;
-	  padding: 1.5vw 2.5vw;
-
+	cursor: pointer;
+	background-color: #71f4bd;
+	padding: 1.5vw 2.5vw;
+	color: #111;
+	border: none;
 }
