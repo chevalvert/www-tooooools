@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'Friction Mono';
+  font-display: auto;
+  src: url('fonts/friction-mono.woff2') format('woff2'),
+       url('fonts/friction-mono.woff') format('woff'),
+       url('fonts/friction-mono.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+	font-family: 'Friction Mono', monospace;
+	text-rendering: optimizeLegibility;
+	font-size: 3vw;
+	background-color: #111;
+	color: #FFF;
+}
+
+#wrapper{
+	width:90vw;	
+	margin: 4vw;
+}
+
+p, form{
+	font-size: 2.5vw;
+	line-height: 3.5vw;
+}
+
+input {
+	  background-color: #FFF;
+	  border: none;
+	  color: #111;
+	  padding: 1.5vw 2.5vw;
+	  text-decoration: none;
+	  display: inline-block;
+	  font-size: 16px;
+	  margin: 4px 2px;
+}
+
+.button{
+	  cursor: pointer;
+	  background-color: #71f4bd;
+	  padding: 1.5vw 2.5vw;
+
+}
