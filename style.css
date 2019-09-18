@@ -23,6 +23,13 @@ body {
 	margin: 4vw;
 }
 
+
+a{
+	text-decoration: none;
+	color: #fff;
+}
+	
+
 p, form{
 	font-size: 2.5vw;
 	line-height: 3.5vw;
@@ -41,8 +48,8 @@ input {
 
 .button{
 	cursor: pointer;
-	background-color: #71f4bd;
+	background-color: #233ee1;
 	padding: 1.5vw 2.5vw;
-	color: #111;
+	color: #fff;
 	border: none;
 }
