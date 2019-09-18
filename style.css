@@ -1,14 +1,16 @@
 @font-face {
-  font-family: 'Friction Mono';
-  font-display: auto;
-  src: url('fonts/friction-mono.woff2') format('woff2'),
-       url('fonts/friction-mono.woff') format('woff'),
-       url('fonts/friction-mono.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+	font-family: 'Friction Mono';
+	font-display: auto;
+	src: url('fonts/friction-mono.woff2') format('woff2'),
+		url('fonts/friction-mono.woff') format('woff'),
+		url('fonts/friction-mono.otf') format('opentype');
+	font-weight: normal;
+	font-style: normal;
 }
 
-*{box-sizing:border-box}
+* {
+	box-sizing: border-box
+}
 
 body {
 	font-family: 'Friction Mono', monospace;
@@ -18,19 +20,24 @@ body {
 	color: #FFF;
 }
 
-#wrapper{
-	width:90vw;	
+#wrapper {
+	width: 90vw;
 	margin: 4vw;
 }
 
+h1 {
+	line-height: 1em;
+}
 
-a{
+
+a {
 	text-decoration: none;
 	color: #fff;
 }
-	
 
-p, form{
+
+p,
+form {
 	font-size: .8em;
 	line-height: 1.3em;
 }
@@ -46,7 +53,7 @@ input {
 	min-height: 5vw;
 }
 
-.button{
+.button {
 	cursor: pointer;
 	background-color: #233ee1;
 	padding: 1.5vw 2.5vw;
@@ -56,8 +63,15 @@ input {
 
 
 @media (orientation: portrait) {
-  body {
-	font-size: 4vw;
-  }
-}
+	body {
+		font-size: 5vw;
+	}
 
+	h1 {
+		line-height: 1.08em;
+	}
+	input {
+	min-height: 8vw;
+	font-size: .8em;
+	}
+}
