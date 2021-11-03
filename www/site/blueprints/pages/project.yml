@@ -1,0 +1,34 @@
+title: Projet
+preset: page
+
+fields:
+  subtitle:
+    label: Sous-titre
+    type: writer
+    inline: true
+
+  cover:
+    label: Image de couverture
+    type: files
+    required: true
+    multiple: false
+    image:
+      cover: true
+
+  text:
+    label: Texte
+    type: blocks
+    fieldsets:
+      - heading
+      - text
+      - list
+      - image
+      - gallery
+      - iframe
+      - video
+      - code
+
+pages: false
+files:
+  image:
+      cover: true

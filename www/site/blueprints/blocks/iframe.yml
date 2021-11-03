@@ -1,0 +1,12 @@
+name: Iframe
+icon: code
+fields:
+  url:
+    label: URL
+    type: url
+    placeholder: https://….com
+    required: true
+  caption:
+    label: Légende
+    type: writer
+    inline: true

@@ -1,0 +1,9 @@
+footer[role=main] {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-size--small);
+
+  a:not(:hover) {
+    text-decoration: none;
+  }
+}

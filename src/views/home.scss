@@ -1,0 +1,87 @@
+@keyframes float {
+  from { transform: translate3d(var(--offset-x, 0), -50%, 0); }
+  to { transform: translate3d(var(--offset-x, 0), 0, 0); }
+}
+
+.view[data-view=home] {
+  @include no-select;
+
+  --color: var(--black);
+  --primary: var(--lightgray);
+  --secondary: var(--white);
+
+  z-index: 0;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+
+  min-height: 100vh;
+
+  @include mobile {
+    height: 100vh;
+  }
+
+  .view__content {
+    pointer-events: none;
+    position: fixed;
+    display: grid;
+    place-items: center;
+  }
+
+  canvas {
+    @include inset(0, fixed);
+    z-index: -1;
+  }
+
+  h1 {
+    font-size: 8rem;
+    line-height: 0;
+    margin-bottom: var(--gutter);
+    padding: 0 var(--gutter);
+
+    @include mobile {
+      padding: 0 calc(2 * var(--gutter));
+    }
+
+    svg {
+      height: 1em;
+      max-width: 100%;
+      fill: currentColor;
+    }
+  }
+
+  &:not(.monochrome) h1 svg {
+    .nut:nth-child(1) { fill: var(--blue); }
+    .nut:nth-child(2) { fill: var(--purple); }
+    .nut:nth-child(3) { fill: var(--red); }
+  }
+
+  h2 {
+    font-family: var(--font-family--monospace);
+    font-size: var(--font-size--large);
+
+    body.has-scrolled & {
+      visibility: hidden;
+    }
+  }
+
+  #go-down {
+    --offset-x: -50%;
+
+    pointer-events: auto;
+    position: fixed;
+    bottom: var(--gutter);
+    left: 50%;
+
+    will-change: transform;
+    animation: float 2s ease-in-out infinite alternate;
+
+    font-family: var(--font-family--monospace);
+    text-decoration: none;
+
+    body.has-scrolled & {
+      display: none;
+    }
+  }
+}
+

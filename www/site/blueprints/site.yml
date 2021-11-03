@@ -1,0 +1,31 @@
+title: Site
+preset: pages
+
+fields:
+  subtitle:
+    label: Sous-titre
+    icon: h2
+    type: text
+
+  introduction_line:
+    type: line
+  introduction_items:
+    label: Introduction
+    type: structure
+    fields:
+      text:
+        label: Texte
+        type: writer
+        inline: true
+        required: true
+      illustration:
+        label: Illustration
+        type: files
+        multiple: false
+        width: 2/3
+      color:
+        label: Couleur d’arrière-plan
+        type: colors
+        width: 1/3
+
+

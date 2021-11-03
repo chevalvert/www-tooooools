@@ -1,0 +1,70 @@
+$items-length: 4;
+$items-length--mobile: 3;
+
+.view[data-view=projects] {
+  --color: var(--black);
+  --primary: var(--lightgray);
+  --secondary: var(--black);
+
+  @include desktop {
+    min-height: 100vh;
+  }
+
+  .view__content {
+    flex: 0;
+  }
+
+  header {
+    position: relative;
+    margin-bottom: calc(2 * var(--gutter));
+
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+
+    nav {
+      @include no-select;
+      white-space: nowrap;
+    }
+
+    nav button {
+      width: var(--gutter);
+      color: var(--secondary);
+    }
+  }
+
+  .projects {
+    @include invisible-scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    display: flex;
+    gap: var(--gutter);
+  }
+
+  .project {
+    scroll-snap-align: start;
+
+    min-width: calc((100% - var(--gutter) * #{$items-length - 1}) / #{$items-length});
+    @include mobile { min-width: calc((100% - var(--gutter) * #{$items-length--mobile - 1}) / #{$items-length--mobile}); }
+
+    a {
+      text-decoration: none;
+    }
+
+    figure {
+      aspect-ratio: 1;
+    }
+
+    figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: var(--black);
+    }
+
+    figcaption h3 {
+      margin-top: 1em;
+      font-size: var(--font-size--small);
+    }
+  }
+}

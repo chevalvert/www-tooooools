@@ -1,0 +1,55 @@
+.menu {
+  @include no-select;
+  @include easing(120ms, background-color);
+  content: '';
+
+  z-index: 2;
+  position: fixed;
+
+  top: 0;
+  width: 100vw;
+  padding: calc(var(--gutter) / 2) var(--gutter);
+  background: transparent;
+
+  color: var(--color);
+
+  display: flex;
+  gap: var(--gutter);
+  justify-content: space-between;
+  align-items: center;
+  line-height: 0;
+
+  // Ensure transparency does not intercept click on matter-js canvas
+  pointer-events: none;
+  a { pointer-events: auto; }
+
+  &.safe {
+    pointer-events: auto;
+    background: var(--lightgray);
+  }
+
+  @include desktop {
+    body.has-scrolled &.safe:not(.always-shown):not(:hover) {
+      background: transparent;
+      .flexgroup { opacity: 0; }
+    }
+  }
+
+  a {
+    font-size: var(--font-size--small);
+    &:not(:hover) {
+      text-decoration: none;
+    }
+  }
+
+  svg {
+    height: 1em;
+    width: auto;
+    fill: var(--color);
+  }
+
+  .flexgroup {
+    @include easing(120ms, opacity);
+    margin-bottom: -2px;
+  }
+}

@@ -1,0 +1,10 @@
+title: Projets
+preset: pages
+
+drafts:
+  image:
+      cover: true
+
+listed:
+  image:
+      cover: true

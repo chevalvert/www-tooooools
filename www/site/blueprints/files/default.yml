@@ -1,0 +1,11 @@
+title: Fichier
+
+fields:
+  alt:
+    label: Texte alternatif
+    type: text
+    placeholder: |
+      Si vide : toools_{page-parente}_{fichier}.{extension}
+
+  focus:
+    type: focus

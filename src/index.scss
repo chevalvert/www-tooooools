@@ -1,0 +1,71 @@
+@import '~highlight.js/styles/github-dark.css';
+@import '~photoswipe/dist/photoswipe';
+@import '~photoswipe/dist/default-skin/default-skin';
+
+@import 'sass/reset';
+@import 'sass/fonts';
+@import 'sass/devices';
+@import 'sass/helpers';
+
+:root {
+  --white: #FFFFFF;
+  --lightgray: #F0F0F0;
+  --black: #141414;
+  --red: #F55A5A;
+  --darkred: #D73232;
+  --green: #30EB64;
+  --darkgreen: #11CD3C;
+  --blue: #598CF5;
+  --darkblue: #2F64D7;
+  --purple: #B48CFC;
+  --darkpurple: #8B64E1;
+
+  // ???
+  --yellow: #fcbe3b;
+  --darkyellow: var(--red);
+
+  --font-family: 'Styrene', sans-serif;
+  --font-family--monospace: 'Friction Mono', monospace;
+
+  --font-size: 1.8rem;
+  --font-size--small: 1.4rem;
+  --font-size--large: 2.6rem;
+  --font-size--xlarge: 3.6rem;
+  --line-height: 1.5;
+
+  --gutter: 3rem;
+  --navbar-height: 4.8rem;
+  --max-width: 1280px;
+
+  @include mobile {
+    --gutter: 2.4rem;
+    --font-size: 1.8rem;
+    --font-size--small: 1.6rem;
+    --font-size--large: 2.0rem;
+    --font-size--xlarge: 2.2rem;
+
+    --navbar-height: 3.8rem;
+  }
+}
+
+@keyframes turn { from { transform: none; } to { transform: rotate(1turn); } }
+.nut {
+  will-change: transform;
+  animation: turn 12s linear infinite;
+}
+.nut:nth-child(odd) { animation-direction: reverse; }
+
+@import 'sass/base';
+
+@import 'components/Footer';
+@import 'components/Menu';
+@import 'components/Photoswipe';
+@import 'components/View';
+
+@import 'views/projects';
+@import 'views/project';
+@import 'views/contact';
+@import 'views/home';
+@import 'views/intro';
+@import 'views/outro';
+@import 'views/playground';

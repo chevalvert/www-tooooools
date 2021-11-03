@@ -1,0 +1,12 @@
+name: field.blocks.gallery.name
+icon: dashboard
+preview: gallery
+fields:
+  images:
+    label: field.blocks.gallery.images.label
+    type: files
+    multiple: true
+    layout: cards
+    empty: field.blocks.gallery.images.empty
+    image:
+      cover: true

@@ -1,0 +1,23 @@
+{
+  "scripts": {
+    "post-autoload-dump": "node scripts/clean-composer.js"
+  },
+  "require": {
+    "php": ">=7.4.0",
+    "getkirby/cms": "^3.6",
+    "flokosiol/focus": "^3.0",
+    "hananils/kirby-colors": "^1.6"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "vendor-dir": "www/vendor",
+    "bin-dir": "www/vendor/bin",
+    "allow-plugins": {
+      "getkirby/composer-installer": true
+    }
+  },
+  "extra": {
+    "kirby-cms-path": "www/kirby",
+    "kirby-plugin-path": "www/site/plugins"
+  }
+}

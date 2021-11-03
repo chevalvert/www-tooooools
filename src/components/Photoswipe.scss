@@ -1,0 +1,43 @@
+// TODO: improve style
+.pswp {
+  &__bg {
+    background-color: var(--lightgray);
+  }
+
+  &__img {
+    background: var(--lightgray);
+    padding: var(--gutter);
+  }
+
+  &__counter {
+    color: var(--black);
+  }
+
+  &__caption {
+    @include no-select;
+    background-color: var(--lightgray) !important;
+    opacity: 0.9;
+    &__center {
+      font-size: var(--font-size);
+      line-height: var(--line-height);
+      text-align: center;
+      color: var(--black) !important;
+      padding: var(--gutter);
+    }
+  }
+
+  &__button {
+    filter: invert(1);
+
+    &--arrow--left,
+    &--arrow--right {
+      margin: 0;
+    }
+  }
+
+  &__top-bar {
+    background: none !important;
+    opacity: 1 !important;
+    display: table !important;
+  }
+}

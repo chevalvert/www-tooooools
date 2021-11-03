@@ -1,0 +1,42 @@
+.view[data-view=intro] {
+  --color: var(--white);
+  --primary: var(--blue);
+  --secondary: var(--black);
+
+  &:nth-child(3) svg {
+    order: -1;
+  }
+
+  .view__content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: var(--font-size--large);
+    gap: calc(3 * var(--gutter));
+
+    @include mobile {
+      display: flex;
+      flex-direction: column;
+    }
+
+    div {
+      flex: 1;
+      max-width: 60%;
+      @include mobile {
+        max-width: 100%;
+      }
+    }
+
+    svg {
+      width: 40%;
+      margin: 0 auto;
+      height: 20rem;
+
+      @include mobile {
+        width: 75%;
+        order: -1;
+      }
+    }
+  }
+}
