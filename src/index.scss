@@ -6,8 +6,15 @@
 :root {}
 
 @import 'sass/base';
+@import 'components/Slider';
 
-main::after {
-  content: 'Hello from SCSS';
-  display: block;
+
+main {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+.slider {
+  width: 500px;
 }

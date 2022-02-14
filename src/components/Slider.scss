@@ -1,0 +1,63 @@
+.slider {
+  --color: black;
+  --thumb-radius: 2rem;
+  --track-thickness: 2px;
+  --ticks-size: 8px;
+
+  position: relative;
+
+  svg { overflow: visible; }
+  svg * { vector-effect: non-scaling-stroke; }
+
+  &__track {
+    pointer-events: none;
+    stroke-width: var(--track-thickness);
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    fill: none;
+    stroke: var(--color);
+  }
+
+  &__track-hitbox {
+    cursor: pointer;
+    stroke-width: 20px;
+    stroke: transparent;
+    fill: none;
+  }
+
+  &__track-ticks {
+    pointer-events: none;
+    fill: none;
+    stroke-width: var(--ticks-size);
+    stroke: var(--color);
+    vector-effect: non-scaling-stroke !important;
+    stroke-dasharray: var(--track-thickness) var(--ticks-space);
+  }
+
+  &__thumb {
+    cursor: pointer;
+
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+
+    width: var(--thumb-radius);
+    height: var(--thumb-radius);
+    border-radius: 100%;
+    background: white;
+    border: var(--track-thickness) solid var(--color);
+
+    transform-origin: center center;
+    transform: translate(-50%, -50%);
+  }
+
+  &:focus {
+    outline: 5px auto Highlight;
+    outline: 5px auto -webkit-focus-ring-color;
+  }
+
+  &:focus &__thumb,
+  &.is-active &__thumb {
+    background: var(--color);
+  }
+}

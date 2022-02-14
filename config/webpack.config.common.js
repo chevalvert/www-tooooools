@@ -18,6 +18,8 @@ module.exports = {
 
   resolve: {
     alias: {
+      abstractions: path.join(root, 'src', 'abstractions'),
+      components: path.join(root, 'src', 'components'),
       utils: path.join(root, 'src', 'utils')
     }
   },
