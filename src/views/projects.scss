@@ -1,22 +1,12 @@
 $items-length: 4;
-$items-length--mobile: 3;
+$items-length--mobile: 2;
 
 .view[data-view=projects] {
-  --color: var(--black);
-  --primary: var(--lightgray);
-  --secondary: var(--black);
-
-  @include desktop {
-    min-height: 100vh;
-  }
-
-  .view__content {
-    flex: 0;
-  }
+  --background: var(--lightgray);
 
   header {
     position: relative;
-    margin-bottom: calc(2 * var(--gutter));
+    margin-bottom: var(--gutter);
 
     display: flex;
     justify-content: space-between;
@@ -28,9 +18,17 @@ $items-length--mobile: 3;
     }
 
     nav button {
+      position: relative;
       width: var(--gutter);
-      color: var(--secondary);
+
+      &::after {
+        @include inset(-1rem);
+        content: '';
+      }
     }
+
+    nav button:first-child::after { right: 0; }
+    nav button:last-child::after { left: 0; }
   }
 
   .projects {
@@ -44,6 +42,7 @@ $items-length--mobile: 3;
   .project {
     scroll-snap-align: start;
 
+    flex: 0;
     min-width: calc((100% - var(--gutter) * #{$items-length - 1}) / #{$items-length});
     @include mobile { min-width: calc((100% - var(--gutter) * #{$items-length--mobile - 1}) / #{$items-length--mobile}); }
 
@@ -52,19 +51,20 @@ $items-length--mobile: 3;
     }
 
     figure {
-      aspect-ratio: 1;
+      aspect-ratio: 70/100;
     }
 
     figure img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      background: var(--black);
     }
 
     figcaption h3 {
       margin-top: 1em;
       font-size: var(--font-size--small);
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }

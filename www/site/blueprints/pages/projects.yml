@@ -1,10 +1,19 @@
 title: Projets
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false
+  duplicate: false
 preset: pages
 
 drafts:
+  template: project
   image:
-      cover: true
+    cover: true
 
 listed:
+  layout: cards
   image:
-      cover: true
+    ratio: 1
+    cover: true

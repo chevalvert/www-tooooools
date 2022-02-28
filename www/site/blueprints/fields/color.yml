@@ -1,0 +1,4 @@
+label: Couleur
+type: colors
+default: '#F0F0F0'
+translate: false

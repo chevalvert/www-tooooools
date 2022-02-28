@@ -7,36 +7,41 @@
   @include no-select;
 
   --color: var(--black);
-  --primary: var(--lightgray);
-  --secondary: var(--white);
+  --background: var(--theme);
 
   z-index: 0;
-  background-attachment: fixed;
   background-position: center;
   background-size: cover;
 
-  min-height: 100vh;
+  height: 100vh;
+  @include mobile { height: 100vh; }
 
-  @include mobile {
-    height: 100vh;
+  &.compact {
+    height: unset;
+    .menu.home-safe ~ main & .view__content {
+      margin-top: var(--navbar-height);
+    }
+  }
+
+  &.has-wireframe {
+    --color: white;
   }
 
   .view__content {
+    flex: 0;
     pointer-events: none;
-    position: fixed;
     display: grid;
     place-items: center;
   }
 
   canvas {
-    @include inset(0, fixed);
+    @include inset(0);
     z-index: -1;
   }
 
   h1 {
-    font-size: 8rem;
+    font-size: 7rem;
     line-height: 0;
-    margin-bottom: var(--gutter);
     padding: 0 var(--gutter);
 
     @include mobile {
@@ -48,21 +53,23 @@
       max-width: 100%;
       fill: currentColor;
     }
+
+    svg .nut {
+      vector-effect: non-scaling-stroke;
+      stroke: var(--color);
+      fill: var(--theme);
+      stroke-width: 1px;
+    }
   }
 
-  &:not(.monochrome) h1 svg {
-    .nut:nth-child(1) { fill: var(--blue); }
-    .nut:nth-child(2) { fill: var(--purple); }
-    .nut:nth-child(3) { fill: var(--red); }
+  &.monochrome svg .nut {
+    stroke: none;
+    fill: var(--color);
   }
 
   h2 {
-    font-family: var(--font-family--monospace);
     font-size: var(--font-size--large);
-
-    body.has-scrolled & {
-      visibility: hidden;
-    }
+    margin-top: var(--gutter);
   }
 
   #go-down {

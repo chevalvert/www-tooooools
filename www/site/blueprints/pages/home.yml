@@ -1,0 +1,48 @@
+title: Homepage
+preset: page
+options:
+  changeSlug: false
+  changeStatus: false
+  changeTemplate: false
+  delete: false
+  duplicate: false
+
+fields:
+  subtitle:
+    label: Sous-titre
+    icon: h2
+    type: text
+
+  color: fields/color
+
+  introduction:
+    label: Introduction
+    type: structure
+    fields:
+      title:
+        label: Titre
+        type: writer
+        inline: true
+        required: true
+      text:
+        label: Texte
+        type: writer
+        required: true
+      # TODO
+      # illustration:
+      #   label: Illustration
+      #   type: files
+      #   required: true
+
+  marquee:
+    label: Mots-clefs défilants
+    type: structure
+    fields:
+      text:
+        label: Texte
+        type: writer
+        inline: true
+        required: true
+
+pages: false
+files: false

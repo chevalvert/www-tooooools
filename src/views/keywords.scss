@@ -1,0 +1,13 @@
+.view[data-view=keywords] {
+  @include no-select;
+  --background: var(--lightgray);
+  font-size: var(--font-size--large);
+
+  .view__content {
+    max-width: unset;
+  }
+
+  .marquee + .marquee {
+    margin-top: calc(var(--gutter));
+  }
+}

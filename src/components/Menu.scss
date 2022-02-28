@@ -1,6 +1,6 @@
 .menu {
   @include no-select;
-  @include easing(120ms, background-color);
+  @include easing(300ms, background-color);
   content: '';
 
   z-index: 2;
@@ -18,20 +18,32 @@
   justify-content: space-between;
   align-items: center;
   line-height: 0;
+  text-transform: lowercase;
 
   // Ensure transparency does not intercept click on matter-js canvas
   pointer-events: none;
   a { pointer-events: auto; }
 
-  &.safe {
-    pointer-events: auto;
-    background: var(--lightgray);
+  body:not(.has-scrolled) &.home-safe {
+    background: var(--theme);
+  }
+
+  @include mobile {
+    &.article-safe {
+      background: var(--theme);
+    }
   }
 
   @include desktop {
-    body.has-scrolled &.safe:not(.always-shown):not(:hover) {
-      background: transparent;
+    body.has-scrolled &.article-safe {
+      pointer-events: auto;
       .flexgroup { opacity: 0; }
+
+      &.is-forced-visible,
+      &:hover {
+        background: var(--theme);
+        .flexgroup { opacity: 1;}
+      }
     }
   }
 
@@ -49,7 +61,13 @@
   }
 
   .flexgroup {
-    @include easing(120ms, opacity);
+    @include easing(300ms, opacity);
     margin-bottom: -2px;
+  }
+
+  // Increase the transition duration when scrolling up to avoid visual noise
+  &.is-forced-visible,
+  &.is-forced-visible .flexgroup {
+    transition-duration: 500ms;
   }
 }

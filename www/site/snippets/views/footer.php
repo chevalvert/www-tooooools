@@ -1,6 +1,8 @@
-<?php /* TODO: dynamic links */  ?>
 <footer role='main'>
-  <a href='https://chevalvert.fr' target='_blank'>chevalvert.fr</a>
+  <div class='flexgroup'>
+    <a href='https://chevalvert.fr' target='_blank'>chevalvert.fr</a>
+  </div>
+
   <div class='flexgroup'>
     <?php foreach($kirby->languages() as $language) : ?>
       <?php if ($language === $kirby->language()) continue ?>
@@ -8,7 +10,12 @@
         <?= Str::lower($language->name()) ?>
       </a>
     <?php endforeach ?>
-    <a href='#' target='_blank'>mentions légales</a>
+
+    <?php if ($legals = page('legals')) : ?>
+      <a href='<?= $legals->url() ?>'><?= $legals->title() ?></a>
+    <?php endif ?>
+
+    <a href='#' id='go-top'>&uarr;</a>
   </div>
 </nav>
 </footer>

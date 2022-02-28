@@ -1,0 +1,11 @@
+label: Texte
+type: blocks
+fieldsets:
+  - heading
+  - text
+  - list
+  - image
+  - gallery
+  - iframe
+  - video
+  - code

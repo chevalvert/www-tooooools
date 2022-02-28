@@ -1,0 +1,38 @@
+.view[data-view=footer] {
+  --background: var(--lightgray);
+  padding: var(--gutter);
+
+  .view__content {
+    max-width: unset;
+  }
+
+  a:not(:hover) {
+    text-decoration: none;
+  }
+
+  footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: var(--font-size--small);
+    text-transform: lowercase;
+    white-space: nowrap;
+  }
+
+  #go-top {
+    font-family: var(--font-family--monospace);
+    text-decoration: none;
+    @include mobile {
+      display: none;
+    }
+  }
+
+  @include mobile {
+    a[hreflang] {
+      font-size: 0;
+      &::after {
+        font-size: var(--font-size--small);
+        content: attr(hreflang);
+      }
+    }
+  }
+}

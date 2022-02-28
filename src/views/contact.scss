@@ -1,81 +1,22 @@
 .view[data-view=contact] {
-  --primary: var(--yellow);
-  --secondary: var(--white);
-  --color: var(--black);
-  --cta-shadow: var(--darkyellow);
-
-  min-height: 100vh;
+  @include no-select;
+  --background: var(--lightgray);
+  font-size: var(--font-size--large);
 
   .view__content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: calc(2 * var(--gutter));
-  }
-
-  h2 {
     text-align: center;
-    margin-bottom: var(--gutter);
-    color: var(--secondary);
-  }
-
-  ul {
-    display: flex;
-    gap: var(--gutter);
-    flex-wrap: wrap;
-  }
-
-  li {
-    display: block;
-    flex: 1;
-
-    figure {
-      display: flex;
-      gap: var(--gutter);
-      flex-direction: column;
-      height: 100%;
-      width: auto;
-    }
-
-    figure svg {
-      height: 20rem;
-      width: auto;
-      max-width: 75%;
-      margin: 0 auto;
-    }
-
-    figure figcaption {
-      max-width: 75%;
-      margin: 0 auto;
-      text-align: center;
-    }
   }
 
   a.cta {
-    @include no-select;
-    @include easing(120ms);
-    will-change: transform;
+    display: inline-block;
 
-    font-family: var(--font-family--monospace);
-
-    position: relative;
-    display: block;
-    align-self: center;
-    font-size: var(--font-size--large);
+    font-size: var(--font-size--small);
     text-align: center;
+    margin: 0 auto;
+    padding: 1em;
     text-decoration: none;
-    padding: var(--gutter);
-    margin-top: var(--gutter);
-    border-radius: 5px;
-    background: var(--secondary);
 
-    &:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 10px 0 var(--cta-shadow);
-    }
-    &:active {
-      transform: translateY(-5px);
-      box-shadow: 0 5px 0 var(--cta-shadow);
-    }
+    background: var(--theme);
+    outline: 1px solid black;
   }
 }

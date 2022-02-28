@@ -1,42 +1,49 @@
 .view[data-view=intro] {
-  --color: var(--white);
-  --primary: var(--blue);
-  --secondary: var(--black);
+  --color: var(--black);
+  --background: var(--theme);
 
-  &:nth-child(3) svg {
-    order: -1;
+  font-size: var(--font-size--large);
+
+  & + & {
+    padding-top: 0;
   }
 
   .view__content {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--gutter);
     align-items: center;
-    justify-content: center;
 
-    font-size: var(--font-size--large);
-    gap: calc(3 * var(--gutter));
 
     @include mobile {
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: 1fr;
     }
+  }
 
-    div {
-      flex: 1;
-      max-width: 60%;
-      @include mobile {
-        max-width: 100%;
-      }
+  p {
+    @include desktop {
+      padding-right: var(--gutter);
     }
+  }
 
-    svg {
-      width: 40%;
-      margin: 0 auto;
-      height: 20rem;
+  p {
+    margin-top: var(--gutter);
+  }
 
-      @include mobile {
-        width: 75%;
-        order: -1;
-      }
+  h2 {
+    font-size: var(--font-size--small);
+    // font-size: 4rem;
+    text-transform: lowercase;
+    line-height: 1.2;
+    // font-weight: bold;
+  }
+
+  .fake-svg {
+    aspect-ratio: 1;
+    background: var(--lightgray);
+
+    @include mobile {
+      order: -1;
     }
   }
 }

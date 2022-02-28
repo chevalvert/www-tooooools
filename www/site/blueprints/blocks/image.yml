@@ -9,7 +9,6 @@ fields:
     image:
       cover: true
 
-  # TODO: implement this in php
   caption:
     label: field.blocks.image.caption
     type: writer

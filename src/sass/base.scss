@@ -18,7 +18,7 @@ body {
   font-size: var(--font-size, 2rem);
   line-height: var(--line-height, 1.5);
 
-  background: var(--lightgray);
+  background: var(--theme, var(--lightgray));
 
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -28,8 +28,8 @@ body {
 }
 
 ::selection {
-  background: var(--color);
-  color: var(--primary);
+  background: var(--color, var(--black));
+  color: var(--theme, var(--lightgray));
 }
 
 a, u {

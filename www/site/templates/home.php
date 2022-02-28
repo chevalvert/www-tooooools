@@ -1,5 +1,5 @@
 <?php snippet('html/header') ?>
-<?php snippet('components/Menu', ['class' => 'always-shown']) ?>
+<?php snippet('components/Menu') ?>
 
 <main>
   <?php
@@ -7,33 +7,35 @@
       'view' => 'home',
       'content' => [
         Html::tag('h1', [snippet('svg/logo', [], true)]),
-        Html::tag('h2', $site->subtitle()),
+        Html::tag('h2', $page->subtitle()),
         Html::a('#intro', '↓', ['id' => 'go-down'])
       ]
     ]);
 
-    foreach ($site->introduction_items()->toStructure() as $fragment) {
+    foreach ($page->introduction()->toStructure() as $index => $fragment) {
+      $content = [
+        // TODO: $fragment->illustration
+        Html::tag('div', null, ['class' => 'fake-svg']),
+        Html::tag('div', [
+          Html::tag('h2', [$fragment->title()->widont()]),
+          $fragment->text()->widont()
+        ])
+      ];
+
       snippet('components/View', [
         'view' => 'intro',
-        'style' => '--primary: ' . $fragment->color()->toHex(),
-        'content' => [
-          Html::tag('div', [$fragment->text()->widont()]),
-          // TODO: dynamic svg
-          snippet('svg/illustration-arrow', [], true)
-        ]
+        'class' => $index === 0 ? 'has-separator' : '',
+        'content' => ($index % 2 === 0) ? array_reverse($content) : $content
       ]);
     }
 
     // TODO[next]
     snippet('components/View', ['view' => 'playground']);
 
-    snippet('components/View', ['view' => 'projects']);
-    snippet('components/View', ['view' => 'contact']);
-
-    snippet('components/View', [
-      'view' => 'outro',
-      'content' => snippet('components/Footer', [], true)
-    ])
+    snippet('components/View', ['view' => 'keywords', 'class' => 'has-separator']);
+    snippet('components/View', ['view' => 'projects', 'class' => 'has-separator']);
+    snippet('components/View', ['view' => 'contact', 'class' => 'has-separator']);
+    snippet('components/View', ['view' => 'footer', 'class' => 'has-separator']);
   ?>
 </main>
 

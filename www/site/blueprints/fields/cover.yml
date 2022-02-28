@@ -1,0 +1,7 @@
+label: Image de couverture
+type: files
+required: true
+multiple: false
+translate: false
+image:
+  cover: true

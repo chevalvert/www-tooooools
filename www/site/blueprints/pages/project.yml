@@ -2,33 +2,36 @@ title: Projet
 preset: page
 
 fields:
-  subtitle:
-    label: Sous-titre
+  article_title:
+    label: Titre
     type: writer
     inline: true
 
   cover:
-    label: Image de couverture
-    type: files
-    required: true
-    multiple: false
-    image:
-      cover: true
+    extends: fields/cover
+    width: 2/3
 
-  text:
-    label: Texte
-    type: blocks
-    fieldsets:
-      - heading
-      - text
-      - list
-      - image
-      - gallery
-      - iframe
-      - video
-      - code
+  coverContrast:
+    label: Contraste
+    type: select
+    width: 1/3
+    required: true
+    translate: false
+    options:
+      black: Noir
+      white: Blanc
+
+  isTranslated:
+    label: État de la traduction
+    type: toggle
+    text:
+      - Traduction imcomplète ou manquante
+      - Traduction complète
+    translate: false
+
+  text: fields/blocks
 
 pages: false
 files:
   image:
-      cover: true
+    cover: true

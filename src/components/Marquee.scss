@@ -1,0 +1,23 @@
+.marquee {
+  @include no-select;
+
+  // Updated via JavaScript
+  --offset-x: 0%;
+
+  width: 100%;
+  overflow: hidden;
+
+  &__content {
+    @include no-select;
+    will-change: transform;
+    cursor: default;
+    width: fit-content;
+    display: flex;
+    white-space: nowrap;
+    transform: translate3d(var(--offset-x), 0, 0);
+
+    & > * {
+      margin-right: var(--gutter);
+    }
+  }
+}
