@@ -1,14 +1,21 @@
 {
   "presets": [
     [
-      "env",
+      "@babel/preset-env",
       {
-        "targets": {
-          "browsers": ["last 2 versions", "ie >= 11"]
-        },
         "modules": false
       }
     ]
   ],
-  "plugins": ["transform-runtime"]
+  "plugins": [
+    ["@babel/transform-runtime"],
+    ["@babel/plugin-syntax-dynamic-import"],
+    [
+      "@babel/plugin-transform-react-jsx",
+      {
+        "pragma": "h",
+        "pragmaFrag": "h.f"
+      }
+    ]
+  ]
 }

@@ -1,0 +1,6 @@
+.nut-grid {
+  &__frame {
+    // Needed to compute simulation bounding-box
+    display: block !important;
+  }
+}

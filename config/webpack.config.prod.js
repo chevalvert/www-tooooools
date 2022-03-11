@@ -2,28 +2,45 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const RemovePlugin = require('remove-files-webpack-plugin')
 
-const UglifyPlugin = require('uglifyjs-webpack-plugin')
-
-const common = require('./webpack.config.common')
-const user = require('./scripts/utils/format-config')(require('./main.config.js'))
-
-const prodConfig = {
-  mode: 'production',
-  entry: user.entries,
+module.exports = merge(require('./webpack.config.common.js'), {
   module: {
     rules: [
       {
-        test: user.css.sourceRegexExt,
+        test: /\.(scss)$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: common.CSSLoaders
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                url: false,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true
+              }
+            }
+          ]
         })
       }
     ]
   },
+
+  optimization: {
+    minimize: true
+  },
+
   plugins: [
-    new webpack.optimize.ModuleConcatenationPlugin(),
+    new RemovePlugin({
+      before: {
+        include: [path.join(__dirname, '..', 'www', 'assets', 'builds')]
+      }
+    }),
 
     // Extract all css into one file
     new ExtractTextPlugin({
@@ -39,22 +56,11 @@ const prodConfig = {
       allChunks: true
     }),
 
-    // Minification and size optimization
-    new UglifyPlugin({
-      sourceMap: true,
-      parallel: true,
-      uglifyOptions: {
-        mangle: true,
-        keep_classnames: true,
-        keep_fnames: false,
-        compress: { inline: false, drop_console: true },
-        output: { comments: false }
-      }
-    }),
-
+    // new MiniCssExtractPlugin({ filename: 'bundle.css' }),
+    new webpack.DefinePlugin({ 'process.env': { NODE_ENV: '"production"' } }),
     new webpack.optimize.OccurrenceOrderPlugin()
   ],
-  devtool: '#source-map'
-}
 
-module.exports = merge(common.webpack, prodConfig)
+  mode: 'production',
+  devtool: 'source-map'
+})

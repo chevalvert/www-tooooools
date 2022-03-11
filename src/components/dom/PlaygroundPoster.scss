@@ -1,0 +1,70 @@
+.playground-poster {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  align-self: center;
+
+  svg {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    max-height: calc(100vh - var(--gutter) * 6);
+    overflow: hidden;
+
+    .bounding-box,
+    .guide {
+      display: none;
+    }
+  }
+
+  &__format {
+    position: absolute;
+    bottom: -1em;
+    font-size: var(--font-size--small);
+
+    transform: translateY(100%);
+
+    .format-label {
+      font-weight: bold;
+    }
+
+    // TODO: download-link
+    .format-file {
+      cursor: pointer;
+      color: var(--blue);
+      text-decoration: underline;
+    }
+  }
+}
+
+.playground-poster.debug svg {
+  outline: 1px solid var(--black);
+  .guide,
+  .no-export,
+  .debug {
+    display: block;
+  }
+
+  image {
+    display: none;
+  }
+
+  rect {
+    fill: none;
+  }
+
+  path {
+    fill: none;
+    stroke: var(--black);
+  }
+
+  .guide {
+    @include easing(200ms, opacity);
+    stroke: #ff44ff;
+    stroke-width: 1px;
+  }
+  .debug { stroke: #9a1fff; }
+  .bounding-box { stroke: #4b96ff; stroke-dasharray: 1 1; }
+}

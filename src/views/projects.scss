@@ -1,70 +1,106 @@
-$items-length: 4;
-$items-length--mobile: 2;
-
 .view[data-view=projects] {
   --background: var(--lightgray);
 
-  header {
-    position: relative;
+  h2 {
     margin-bottom: var(--gutter);
-
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-
-    nav {
-      @include no-select;
-      white-space: nowrap;
-    }
-
-    nav button {
-      position: relative;
-      width: var(--gutter);
-
-      &::after {
-        @include inset(-1rem);
-        content: '';
-      }
-    }
-
-    nav button:first-child::after { right: 0; }
-    nav button:last-child::after { left: 0; }
   }
 
   .projects {
     @include invisible-scroll;
-    scroll-behavior: smooth;
-    scroll-snap-type: x proximity;
+    scroll-snap-type: x mandatory;
     display: flex;
     gap: var(--gutter);
   }
 
+  nav {
+    @include no-select;
+    font-size: var(--font-size);
+    white-space: nowrap;
+    margin-left: -0.7rem;
+    margin-bottom: 1em;
+
+    @include mobile {
+      // ???
+      display: none;
+    }
+  }
+
+  nav button {
+    position: relative;
+    width: var(--gutter);
+    &::after {
+      @include inset(-1rem);
+      content: '';
+    }
+  }
+
+  nav button:first-child::after { right: 0; }
+  nav button:last-child::after { left: 0; }
+
   .project {
+    flex: 0;
+    min-width: 100%;
     scroll-snap-align: start;
 
-    flex: 0;
-    min-width: calc((100% - var(--gutter) * #{$items-length - 1}) / #{$items-length});
-    @include mobile { min-width: calc((100% - var(--gutter) * #{$items-length--mobile - 1}) / #{$items-length--mobile}); }
+    &__content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--gutter);
 
-    a {
-      text-decoration: none;
+      @include mobile {
+        display: block;
+      }
     }
 
     figure {
       aspect-ratio: 70/100;
+
+      @include mobile {
+        margin-bottom: var(--gutter);
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
-    figure img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+    &__abstract {
+      align-self: center;
 
-    figcaption h3 {
-      margin-top: 1em;
-      font-size: var(--font-size--small);
-      overflow: hidden;
-      text-overflow: ellipsis;
+      header {
+        font-size: var(--font-size--small);
+        border-bottom: 1px solid;
+        padding-bottom: var(--gutter);
+        margin-bottom: var(--gutter);
+
+        @include mobile {
+          border: 0;
+          padding-bottom: 0;
+        }
+      }
+
+      h3 {
+        font-size: var(--font-size--large);
+        line-height: 1.2;
+        margin-bottom: var(--gutter);
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        a:not(:hover) {
+          text-decoration: none;
+        }
+      }
+
+      p {
+        margin-top: 1em;
+      }
+
+      footer {
+        font-size: var(--font-size--small);
+        margin-top: var(--gutter);
+      }
     }
   }
 }

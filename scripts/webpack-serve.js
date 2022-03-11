@@ -1,71 +1,60 @@
 const fs = require('fs-extra')
 const path = require('path')
-const os = require('os')
 const browserSync = require('browser-sync')
 const webpack = require('webpack')
-const webpackConfig = require('../webpack.config.dev')
+const webpackConfig = require('../config/webpack.config.dev')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
-
-const isMacOS = (os.platform() === 'darwin')
-
 const php = require('@pqml/node-php-server')
-
-const Tail = require('tail').Tail
-
-const user = require('../main.config.js')
-
+const { Tail } = require('tail')
 const sh = require('kool-shell/namespaced')('__kirbywebpack')
-
 const LOGPATH = path.join(process.cwd(), 'php-error.log')
+
+const isMacOS = (require('os').platform() === 'darwin')
+
 const bs = browserSync.create()
-const useProxy = !!user.devServer.proxy
 
 let isWebpackInit, isPhpInit
 let compiler
 let hotMiddleware, devMiddleware, proxyAddr, phpServer
 
+const WWW = path.join(__dirname, '..', 'www')
+
 phpInit()
 
 function phpInit () {
   sh.log()
+  sh.step(1, 3, 'Starting a php server...')
 
-  sh.step(1, 3, useProxy
-    ? 'PHP has to run from your proxy, ' + user.devServer.proxy
-    : 'Starting a php server...')
-
-  // if a proxy is set we don't need to create a built-in php server
-  if (useProxy) {
-    proxyAddr = user.devServer.proxy
-    isPhpInit = true
-    return webpackInit()
-  }
-
-  let args = [
+  const args = [
     '-d', 'upload_max_filesize=100M',
     '-d', 'post_max_size=500M',
     '-d', 'short_open_tag=On',
-
-    // enable custom php router
-    // to handle routes with dots in it (like /default.json)
-    // this is needed to use content representations
-    path.join(user.paths.www, 'kirby', 'router.php')
+    // Enable custom php router to handle routes with dots in it, this is needed
+    // to use content representations
+    path.join(WWW, 'kirby', 'router.php'),
+    '-d', `error_log="${LOGPATH}"`
   ]
 
-  if (user.devServer.logPhpErrors) {
-    args.push('-d', 'error_log="' + LOGPATH + '"')
-  }
-
   phpServer = php({
-    bin: user.devServer.phpBinary || 'php',
-    host: user.devServer.phpHost || 'localhost',
-    root: user.paths.www,
+    // The alias/path to the php binary. OSX has PHP available natively.
+    // You have to edit this to have the devServer working on Windows.
+    // Use the proxy opt if you can't use / don't want to use a built-in php serv.
+    bin: 'php',
+    // Host used by the php built-in server. Only used when proxy is false.
+    // Default is localhost.
+    // On Mac, the default will be [::1] (IPv6 equivalent of localhost)
+    // See: http://php.net/manual/en/features.commandline.webserver.php#120449
+    // You might need to change config/config.localhost.php into config.[YOURHOST].php
+    // In order for kirby-webpack to continue working with your host
+    host: 'localhost',
+    root: WWW,
     verbose: true,
     promptBinary: true,
     args
   })
 
-  phpServer.on('start', ({host, port}) => {
+  phpServer.on('start', ({ host, port }) => {
     if (isPhpInit) return
     // php server can't be reach through localhost, we have to use [::1]
     sh.log('PHP Server started on ' + host + ':' + port + '\n')
@@ -90,7 +79,7 @@ function webpackInit () {
   compiler = webpack(webpackConfig)
   hotMiddleware = webpackHotMiddleware(compiler)
   devMiddleware = webpackDevMiddleware(compiler, {
-    publicPath: user.paths.basepath,
+    publicPath: '/',
     stats: {
       colors: true,
       hash: false,
@@ -101,7 +90,7 @@ function webpackInit () {
     }
   })
   compiler.hooks.done.tap('kirbywebpack-done', () => {
-    // init the browserSync server once a first build is ready
+    // Init the browserSync server once a first build is ready
     if (isWebpackInit) return
     isWebpackInit = true
     process.nextTick(browserSyncInit)
@@ -114,7 +103,7 @@ function browserSyncInit () {
 
   const middlewares = [devMiddleware, hotMiddleware]
 
-  // add a custom event for change in the www/content folder
+  // Add a custom event for change in the www/content folder
   // to enable livereload on the site but disable it on panel to avoid reload
   // when editing the content.
   bs.use({
@@ -128,7 +117,7 @@ function browserSyncInit () {
   })
 
   const BROWSERSYNC_OPTIONS = {
-    port: user.devServer.port || 8080,
+    port: 8080,
     proxy: {
       target: proxyAddr,
       middleware: middlewares,
@@ -138,25 +127,25 @@ function browserSyncInit () {
         proxyReq.setHeader('X-Forwarded-Proto', BROWSERSYNC_OPTIONS.https ? 'https' : 'http')
       }]
     },
-    https: !!user.devServer.https,
+    https: false,
     open: false,
     reloadOnRestart: true,
     notify: false,
-    files: [path.join(user.paths.www, '**/*')],
-    ghostMode: {
-      clicks: false,
-      forms: false,
-      scroll: false
-    },
+    files: [path.join(WWW, '**/*')],
     watchOptions: {
       ignoreInitial: true,
       ignored: [
-        path.join(user.paths.www, '**/*.log'),
-        path.join(user.paths.www, 'content', '**/*'),
-        path.join(user.paths.www, 'site', 'cache', '**/*'),
-        path.join(user.paths.www, 'site', 'accounts', '**/*'),
-        path.join(user.paths.www, 'thumbs', '**/*')
-      ].concat(user.devServer.ignored)
+        path.join(WWW, '**/*.log'),
+        path.join(WWW, 'content'),
+        path.join(WWW, 'content', '**/*'),
+        path.join(WWW, 'media'),
+        path.join(WWW, 'site', 'accounts', '**/*'),
+        path.join(WWW, 'site', 'cache'),
+        path.join(WWW, 'site', 'cache', '**/*'),
+        path.join(WWW, 'site', 'logs'),
+        path.join(WWW, 'site', 'sessions'),
+        path.join(WWW, 'thumbs', '**/*')
+      ]
     }
   }
 
@@ -165,7 +154,7 @@ function browserSyncInit () {
     (error, instance) => {
       if (error) throw error
       // custom event for change in the www/content folder
-      bs.watch(path.join(user.paths.www, 'content', '**/*'), {
+      bs.watch(path.join(WWW, 'content', '**/*'), {
         ignored: '**/.lock'
       }).on('change', (file) => {
         instance.io.sockets.emit('kirby:contentupdate', { file: file })
@@ -178,7 +167,7 @@ function ready () {
   process.nextTick(() => {
     sh.log()
     sh.success('kirby-webpack server is up and running\n')
-    if (user.devServer.logPhpErrors) logPhpError()
+    logPhpError()
   })
 }
 

@@ -2,8 +2,6 @@
   --color: var(--black);
   --background: var(--theme);
 
-  font-size: var(--font-size--large);
-
   & + & {
     padding-top: 0;
   }
@@ -14,30 +12,24 @@
     gap: var(--gutter);
     align-items: center;
 
-
     @include mobile {
       grid-template-columns: 1fr;
     }
   }
 
+  h2 {
+    font-size: var(--font-size--large);
+    line-height: 1.2;
+  }
+
   p {
+    margin-top: var(--gutter);
     @include desktop {
       padding-right: var(--gutter);
     }
   }
 
-  p {
-    margin-top: var(--gutter);
-  }
-
-  h2 {
-    font-size: var(--font-size--small);
-    // font-size: 4rem;
-    text-transform: lowercase;
-    line-height: 1.2;
-    // font-weight: bold;
-  }
-
+  // DEBUG
   .fake-svg {
     aspect-ratio: 1;
     background: var(--lightgray);

@@ -29,9 +29,12 @@
 
   .view__content {
     flex: 0;
-    pointer-events: none;
     display: grid;
     place-items: center;
+  }
+
+  &.has-running-matter .view__content {
+    pointer-events: none;
   }
 
   canvas {

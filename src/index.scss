@@ -44,11 +44,15 @@
 
 @import 'sass/base';
 
-@import 'components/Article';
-@import 'components/Marquee';
-@import 'components/Menu';
-@import 'components/Photoswipe';
-@import 'components/View';
+@import 'components/dom/Article';
+@import 'components/dom/Button';
+@import 'components/dom/Marquee';
+@import 'components/dom/Menu';
+@import 'components/dom/Photoswipe';
+@import 'components/dom/PlaygroundPoster';
+@import 'components/dom/View';
+
+@import 'components/svg/NutGrid';
 
 @import 'views/archives';
 @import 'views/contact';

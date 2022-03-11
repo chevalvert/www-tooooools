@@ -1,0 +1,61 @@
+.button {
+  @include easing(300ms, outline, true);
+
+  --scale: 1;
+  --offset-x: 0;
+  --offset-y: 0;
+  --pressed: 0;
+
+  display: inline;
+  outline: 1px solid transparent;
+  // color: black;
+  background: var(--theme) !important;
+
+  &, &::before {
+    transition: 120ms transform, 300ms outline;
+    transition-timing-function: cubic-bezier(.215,.61,.355,1);
+    will-change: transform;
+    transform: translate3d(var(--offset-x, 0), var(--offset-y, 0), 0) scale(var(--scale)) translateY(var(--pressed));
+    transform-origin: center;
+  }
+
+  &.is-hover {
+    outline: 1px solid var(--black);
+  }
+
+  &:active {
+    --scale: 0.9;
+    --pressed: 3px;
+  }
+}
+
+button.button {
+  @include no-select;
+  font-family: var(--font-family--monospace);
+  font-size: 70%;
+  padding: 0.4em 0.4em 0.2em;
+  cursor: pointer;
+  vertical-align: 2px;
+}
+
+input[type=checkbox].button {
+  @include reset-button;
+  position: relative;
+  padding: 0 0.5em;
+  cursor: pointer;
+  overflow: hidden;
+
+  &:before {
+    content: '✓';
+    opacity: 0;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    top: -0.15em;
+  }
+
+  &:checked::before {
+    opacity: 1;
+  }
+}

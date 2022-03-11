@@ -1,10 +1,6 @@
 .view[data-view=project-info] {
-
   .view__content {
-    // max-width: var(--max-width--article);
-  }
-
-  h2 {
-    margin-bottom: 2em;
+    max-width: unset;
+    font-size: var(--font-size--small);
   }
 }

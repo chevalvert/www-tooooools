@@ -1,7 +1,5 @@
 const path = require('path')
 const fs = require('fs-extra')
-const { paths } = require('../main.config.js')
-// const composerConfig = require('../composer.json')
 const regQuote = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 
 const FILES = [
@@ -59,7 +57,7 @@ function fixWWWPaths (str) {
 
 ;(async () => {
   try {
-    const composerDir = path.join(paths.www, 'vendor', 'composer')
+    const composerDir = path.join(__dirname, '..', 'www', 'vendor', 'composer')
     for (const file of FILES) {
       const fp = path.join(composerDir, file + '.php')
       const content = await fs.readFile(fp, 'utf8')

@@ -6,17 +6,4 @@
   .view__content {
     text-align: center;
   }
-
-  a.cta {
-    display: inline-block;
-
-    font-size: var(--font-size--small);
-    text-align: center;
-    margin: 0 auto;
-    padding: 1em;
-    text-decoration: none;
-
-    background: var(--theme);
-    outline: 1px solid black;
-  }
 }
