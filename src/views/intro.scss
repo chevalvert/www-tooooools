@@ -1,6 +1,10 @@
+@keyframes appears {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
 .view[data-view=intro] {
   --color: var(--black);
-  --background: var(--theme);
 
   & + & {
     padding-top: 0;
@@ -18,8 +22,18 @@
   }
 
   h2 {
-    font-size: var(--font-size--large);
-    line-height: 1.2;
+    @include font-size(xlarge);
+    padding-right: var(--gutter);
+
+    .desktop-br {
+      display: block;
+      @include mobile {
+        display: inline;
+        &::after {
+          content: ' ';
+        }
+      }
+    }
   }
 
   p {
@@ -36,6 +50,7 @@
 
     @include mobile {
       order: -1;
+      margin-bottom: var(--gutter);
     }
   }
 }

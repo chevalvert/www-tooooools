@@ -17,15 +17,9 @@ return array_merge(require_once 'credentials.php', [
 
   'thumbs' => [
     'presets' => [
-      'default' => ['width' => 1920, 'quality' => 100]
-    ],
-    'srcset' => [
-      '1920w' => 'default',
-      '1600w' => ['width' => 1600, 'quality' => 100],
-      '1366w' => ['width' => 1366, 'quality' => 90],
-      '1024w' => ['width' => 1024, 'quality' => 90],
-      '768w' => ['width' => 768, 'quality' => 80],
-      '640w' => ['width' => 640, 'quality' => 80],
+      'default' => ['width' => 1920, 'quality' => 100],
+      'cover' => ['width' => 1920, 'height' => 1280, 'quality' => 100, 'crop' => true],
+      'abstract' => ['width' => 960, 'height' => 1370, 'quality' => 100]
     ]
   ],
 
@@ -41,8 +35,8 @@ return array_merge(require_once 'credentials.php', [
     ],
 
     [ // Keep preferred language in cookies
-      'pattern' => '(fr|en)',
-      'action' => function ($lang) {
+      'pattern' => ['(fr|en)', '(fr|en)/(:all)'],
+      'action' => function ($lang, $uid = null) {
         Cookie::forever('lang', $lang);
         return $this->next();
       }
@@ -73,6 +67,13 @@ return array_merge(require_once 'credentials.php', [
       'action' => function ($lang) {
         go("$lang/#projects");
       }
-    ]
+    ],
+
+    [ // Redirect home to home/
+      'pattern' => '(fr|en)/home',
+      'action' => function ($lang) {
+        go("$lang");
+      }
+    ],
   ]
 ]);

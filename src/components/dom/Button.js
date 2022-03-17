@@ -1,9 +1,10 @@
 import distSq from 'utils/distance-squared'
+import isMobile from 'utils/is-mobile'
 
 export default function (element, container = window) {
-  // TODO: skip on no pointer devices
-
   element.classList.add('button')
+
+  if (isMobile) return
   container.addEventListener('mousemove', handleMouse)
 
   function handleMouse (e) {
@@ -21,8 +22,7 @@ export default function (element, container = window) {
       const dx = (e.clientX - rect.center[0]) * factor
       const dy = (e.clientY - rect.center[1]) * factor
 
-      element.classList.toggle('is-hover', hit)
-      // TODO: round to 2px on non retina to avoid blur ?
+      element.classList.toggle('is-sticked', hit)
       element.style.setProperty('--offset-x', Math.floor(dx) + 'px')
       element.style.setProperty('--offset-y', Math.floor(dy) + 'px')
     })

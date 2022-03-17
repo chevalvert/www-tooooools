@@ -1,0 +1,14 @@
+.view[data-view=project] {
+  --accent: var(--blue);
+
+  .marquee {
+    @include font-size(small);
+    position: absolute;
+    top: calc(-1 * var(--navbar-height));
+    left: 0;
+    right: 0;
+    background: var(--theme);
+    height: var(--navbar-height);
+    padding: calc(var(--gutter) / 2) var(--gutter);
+  }
+}

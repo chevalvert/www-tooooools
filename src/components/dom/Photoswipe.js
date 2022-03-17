@@ -1,18 +1,28 @@
 import PhotoSwipe from 'photoswipe'
 import PhotoSwipeUIDefault from 'photoswipe/dist/photoswipe-ui-default'
+import isMobile from 'utils/is-mobile'
 
 const OPTIONS = {
   bgOpacity: 1,
   history: false,
   allowPanToNext: false,
-  barsSize: { top: 0, bottom: 'auto' },
-  captionEl: true,
+  barsSize: { top: 22, bottom: 'auto' },
+  captionEl: false,
   fullscreenEl: false,
+  closeEl: true,
   zoomEl: false,
   shareEl: false,
-  counterEl: true,
-  preloaderEl: true,
-  showHideOpacity: true
+  counterEl: false,
+  preloaderEl: false,
+  showHideOpacity: true,
+  timeToIdle: null,
+  timeToIdleOutside: null,
+  tapToToggleControls: false,
+  maxSpreadZoom: isMobile ? 2 : 1,
+  pinchToClose: isMobile,
+  getDoubleTapZoom: (isMouseClick, item) => isMobile
+    ? (item.initialZoomLevel < 0.7 ? 1 : 1.5)
+    : item.initialZoomLevel
 }
 
 export default function (figures = []) {
@@ -49,22 +59,9 @@ export default function (figures = []) {
       container,
       PhotoSwipeUIDefault,
       slides,
-      Object.assign({}, OPTIONS, { index, getThumbBoundsFn })
+      Object.assign({}, OPTIONS, { index })
     )
 
     photoswipe.init()
-  }
-
-  function getThumbBoundsFn (index) {
-    const slide = slides[index]
-    if (!slide) return
-
-    const pageYScroll = window.pageYOffset || document.documentElement.scrollTop
-    const { left, top, width } = slide.element.getBoundingClientRect()
-    return {
-      x: left,
-      y: top + pageYScroll,
-      w: width
-    }
   }
 }

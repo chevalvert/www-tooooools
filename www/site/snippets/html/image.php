@@ -6,24 +6,25 @@
     : Str::slug($site->title() . '_' . $image->parent()->title()) . '_' . $image->filename();
 
   $full = $image->thumb('default');
-  // $width = $full->width();
-  // $height = $full->height();
-  // $empty = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 $width $height'%3E%3C/svg%3E";
 
-  $srcset = [];
-  foreach (option('thumbs.srcset') as $breakpoint => $preset) {
-    $thumb = $image->thumb($preset);
-    $srcset[] = $thumb->url() . ' ' . $breakpoint;
-  }
+  $preset = $preset ?? 'default';
+  $preset = option("thumbs.presets.$preset", option('thumbs.presets.default'));
+  $thumb = $preset['crop'] ?? false
+    ? $image->focusCrop($preset['width'] ?? null, $preset['height'] ?? null, $preset)
+    : $image->thumb($preset);
 
-  // TODO: srcset
-  // TODO: lazyload
+  $width = $thumb->width();
+  $height = $thumb->height();
+  $empty = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 $width $height'%3E%3C/svg%3E";
+
   echo Html::tag('figure', [
-    Html::img($full->url(), [
-      // 'data-lazyload' => true,
-      // 'data-srcset' => implode(', ', $srcset),
+    Html::img($empty, [
+      'data-lazyload' => 'true',
+      'data-src' => $thumb->url(),
       'alt' => $alt,
       'loading' => 'lazy',
+      'width' => $width,
+      'height' => $height,
       'data-width' => $full->width(),
       'data-height' => $full->height(),
       'data-zoom-src' => $full->url(),

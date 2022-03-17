@@ -1,35 +1,48 @@
-<?php $page = page('projects') ?>
+<?php
+  $projects = $projects ?? page('projects')->children()->listed();
+  $title = $title ?? null;
+?>
 
-<ul class='projects' id='jsProjects'>
-  <?php foreach ($page->children()->listed() as $child) : ?>
+<?php if ($title) echo Html::tag('h2', [$title]) ?>
+
+<ul class='projects'>
+  <?php foreach ($projects as $project) : ?>
     <li class='project'>
       <div class='project__content'>
-        <a href='<?= $child->url() ?>'>
-          <?php // TODO: focuscrop to 70x100 ?>
-          <?php snippet('html/image', ['image' => $child->cover()->toFile()]) ?>
+        <a href='<?= $project->url() ?>'>
+          <?php snippet('html/image', [
+            'image' => $project->abstract_cover()->toFile(),
+            'preset' => 'abstract'
+          ]) ?>
         </a>
         <div class='project__abstract'>
           <nav>
-            <button data-action='prev'>←</button>
-            <button data-action='next'>→</button>
+            <button data-action='prev' <?= $projects->indexOf($project) === 0 ? 'disabled' : '' ?>>←</button>
+            <button data-action='next' <?= $projects->indexOf($project) === $projects->count() - 1 ? 'disabled' : '' ?>>→</button>
+
+            <ul class='projects__dots'>
+              <?php foreach ($projects as $p) : ?>
+                <li class='projects__dot <?= $p === $project ? 'is-active' : '' ?>' data-action='jump' data-index='<?= $projects->indexOf($p) ?>'>&bull;</li>
+              <?php endforeach ?>
+            </ul>
           </nav>
 
-          <h3><a href='<?= $child->url() ?>'><?= $child->title()->widont() ?></a></h3>
+          <h3><a href='<?= $project->url() ?>'><?= $project->title()->widont() ?></a></h3>
 
-          <?php // TODO: dynamic content ?>
           <header>
-            <div>2019</div>
-            <div>identité visuelle générative</div>
-            <div>impression et communication réseaux sociaux</div>
-            <div>site internet</div>
+            <div><?= $project->year() ?></div>
+            <ul>
+              <?php foreach ($project->keywords()->split() as $keyword) : ?>
+                <li><?= $keyword ?></li>
+              <?php endforeach ?>
+            </ul>
           </header>
 
           <div>
-            <p>La Fédération Française du Paysage est l'organisation qui représente la profession de paysagiste concepteur. Elle regroupe aujourd'hui plus de 3650 membres, soit un professionnel sur trois.</p>
-            <p>Toools™ développe un outil sur-mesure pour cette identité générative axée sur la construction de paysages.</p>
+            <?= $project->abstract()->widont() ?>
           </div>
           <footer>
-            <a href='<?= $child->url() ?>'>Lire l’étude de cas</a>
+            <a href='<?= $project->url() ?>'>Lire l’étude de cas</a>
           </footer>
         </div>
       </div>

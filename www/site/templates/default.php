@@ -15,10 +15,7 @@
       'class' => 'has-separator',
       'content' => [
         snippet('components/Article', [
-          'content' => [
-            Html::tag('h2', [$page->title()->widont()]),
-            $page->text()->toBlocks()
-          ]
+          'content' => $page->text()->toBlocks()
         ], true)
       ],
     ]);

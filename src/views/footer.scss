@@ -1,5 +1,4 @@
 .view[data-view=footer] {
-  --background: var(--lightgray);
   padding: var(--gutter);
 
   .view__content {
@@ -11,14 +10,14 @@
   }
 
   footer {
+    @include font-size(small);
     display: flex;
     justify-content: space-between;
-    font-size: var(--font-size--small);
     text-transform: lowercase;
     white-space: nowrap;
   }
 
-  #go-top {
+  #go-up {
     font-family: var(--font-family--monospace);
     text-decoration: none;
     @include mobile {
@@ -30,7 +29,7 @@
     a[hreflang] {
       font-size: 0;
       &::after {
-        font-size: var(--font-size--small);
+        @include font-size(small);
         content: attr(hreflang);
       }
     }

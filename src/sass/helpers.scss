@@ -72,3 +72,27 @@
   -webkit-user-select: none;
   user-select: none;
 }
+
+@mixin loader ($size: 1em, $thickness: 1px, $foreground: var(--black), $background: transparent, $speed: 1s) {
+  @keyframes loader-spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: $size;
+  height: $size;
+
+  border: $thickness solid $background;
+  border-top: $thickness solid $foreground;
+  border-left: $thickness solid $foreground;
+  border-radius: 50%;
+
+  animation: loader-spin $speed linear infinite;
+
+  content: '';
+  pointer-events: none;
+}

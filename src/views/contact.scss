@@ -1,7 +1,6 @@
 .view[data-view=contact] {
   @include no-select;
-  --background: var(--lightgray);
-  font-size: var(--font-size--large);
+  @include font-size(large);
 
   .view__content {
     text-align: center;

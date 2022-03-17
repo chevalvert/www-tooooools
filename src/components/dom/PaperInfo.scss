@@ -1,0 +1,32 @@
+.paper-info {
+  @include font-size(small);
+
+  * {
+    width: fit-content;
+    @include mobile {
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+
+  &__label {
+    font-weight: bold;
+  }
+
+  &__file {
+    cursor: pointer;
+    color: var(--blue);
+    text-decoration: underline;
+    width: fit-content;
+
+    &.is-loading {
+      position: relative;
+      &::before {
+        @include loader;
+        content: '';
+        left: unset;
+        right: -2em;
+      }
+    }
+  }
+}

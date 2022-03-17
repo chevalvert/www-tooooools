@@ -81,6 +81,7 @@ export default class Paragraph extends Component {
         font={state.font}
         fontSize={state.fontSize}
         color={props.color}
+        attributes={props.attributes}
       />
     ))
 

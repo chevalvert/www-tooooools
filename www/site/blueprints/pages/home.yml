@@ -1,5 +1,6 @@
 title: Homepage
 preset: page
+icon: home
 options:
   changeSlug: false
   changeStatus: false
@@ -12,11 +13,18 @@ fields:
     label: Sous-titre
     icon: h2
     type: text
+    width: 1/2
 
-  color: fields/color
+  color:
+    extends: fields/color
+    width: 1/2
+
+  --1:
+    label: Introduction
+    extends: fields/headline
 
   introduction:
-    label: Introduction
+    label: false
     type: structure
     fields:
       title:
@@ -34,8 +42,25 @@ fields:
       #   type: files
       #   required: true
 
-  marquee:
+  --2:
+    label: Playground
+    extends: fields/headline
+
+  playground_title:
+    label: Titre du playground
+    type: text
+
+  playground_text:
+    label: Texte du playground
+    type: writer
+
+
+  --3:
     label: Mots-clefs défilants
+    extends: fields/headline
+
+  marquee:
+    label: false
     type: structure
     fields:
       text:
@@ -43,6 +68,22 @@ fields:
         type: writer
         inline: true
         required: true
+
+  --4:
+    label: Projets
+    extends: fields/headline
+
+  projects_title:
+    label: Titre de la section projets
+    type: writer
+
+  --5:
+    label: Contact
+    extends: fields/headline
+
+  contact_text:
+    label: Texte de contact
+    type: writer
 
 pages: false
 files: false

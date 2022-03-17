@@ -3,6 +3,8 @@ import { degrees } from 'missing-math'
 import raf from '@internet/raf'
 import Matter from 'controllers/Matter'
 import pathData from 'utils/path-data'
+import randomOf from 'utils/array-random'
+import * as Matrice from 'transformation-matrix'
 
 import Nut from 'components/svg/Nut'
 
@@ -13,6 +15,7 @@ export default class NutGrid extends Component {
     this.handleResize = this.handleResize.bind(this)
 
     this.state = {
+      nuts: new Map(),
       usePhysics: props.usePhysics !== false,
       simulation: undefined // SEE afterMount
     }
@@ -46,35 +49,62 @@ export default class NutGrid extends Component {
     this.update()
   }
 
-  clear () {
-    if (this.state.simulation) this.state.simulation.clear()
-  }
-
   update () {
     const { width, height } = this.props
-    const margin = width / 100
-    const size = ((Math.max(width, height) - margin) / this.props.length) - margin
-    const [sides, shape] = [6, 'hex'] // TODO: allow dynamic shapes
+    const length = this.props.length || 1
+    const padding = (this.props.padding || 0)
+    const margin = (this.props.margin || padding)
 
-    // TODO: better center method
+    // Compute max nut size based on length and format dimensions
+    const vmax = Math.max(width, height) - (padding * 2)
+    const size = (vmax / length) - margin
 
-    for (let x = this.props.padding + (size / 2); x < width - (size / 2) - (this.props.padding); x += size + margin) {
-      for (let y = this.props.padding + (size / 2); y < height - (size / 2) - (this.props.padding); y += size + margin) {
-        const nut = this.state.simulation && this.state.simulation.nutBody(x + this.props.x, y + this.props.y, size + margin, { sides })
+    // Compute nuts length on x and y directions
+    const ratio = width / height
+    const xlen = Math.floor(ratio >= 1 ? length : length / ratio)
+    const ylen = Math.floor(ratio >= 1 ? length / ratio : length)
+
+    // Compute padding start so that grid is always centered
+    const xstart = (width - (size * xlen) - (margin * (xlen - 1))) / 2
+    const ystart = (height - (size * ylen) - (margin * (ylen - 1))) / 2
+
+    // Draw from center
+    const xoff = xstart + (size / 2)
+    const yoff = ystart + (size / 2)
+
+    for (let i = 0; i < xlen; i++) {
+      const x = xoff + i * (size + margin)
+      for (let j = 0; j < ylen; j++) {
+        const y = yoff + j * (size + margin)
+        const shape = randomOf(Array.isArray(this.props.shape)
+          ? this.props.shape
+          : [this.props.shape || 'hex']
+        )
+        const angle = shape === 'hex' ? Math.random() * Math.PI / 2 : 0
+
+        const nut = this.state.simulation && this.state.simulation.nutBody(
+          x + this.props.x,
+          y + this.props.y,
+          size,
+          { shape, angle }
+        )
         const body = this.state.simulation && this.state.simulation.add(nut)
-        this.render((
+
+        const nutInstance = this.render((
           <Nut
             shape={shape}
-            x={x + this.props.x - size / 2}
-            y={y + this.props.y - size / 2}
-            id={body && 'nut_' + body.id}
+            x={x + this.props.x}
+            y={y + this.props.y}
             width={size}
             height={size}
             fill={this.props.color}
-            opacity={this.props.debug ? 0.1 : 1}
-            ref={this.refArray('nuts')}
+            opacity={this.props.debug ? 0.5 : 1}
+            angle={angle}
+            attributes={this.props.attributes || {}}
           />
-        ), this.refs.container)
+        ), this.refs.container).components[0]
+
+        this.state.nuts.set(body.id, nutInstance)
       }
     }
   }
@@ -90,17 +120,12 @@ export default class NutGrid extends Component {
         this.render(<path d={pathData(body.vertices.map(({ x, y }) => [x, y]))} fill='none' stroke='black' />, this.refs.matterDebug)
       }
 
-      // Update found refs
-      const ref = this.base.querySelector(`#nut_${body.id}`)
-      if (!ref) continue
-      const x = body.position.x
-      const y = body.position.y
-      const alpha = degrees(body.angle - Math.PI / 2)
-      ref.width = ref.width || (+ref.getAttribute('width'))
-      ref.height = ref.height || (+ref.getAttribute('height'))
-      const scaleX = ref.width / 100
-      const scaleY = ref.height / 100
-      ref.setAttribute('transform', `translate(${x} ${y}) rotate(${alpha}) translate(${-ref.width / 2} ${-ref.height / 2}) scale(${scaleX} ${scaleY})`)
+      const ref = this.state.nuts.get(body.id)
+      ref && ref.updateMatrice({
+        x: body.position.x,
+        y: body.position.y,
+        angle: body.angle
+      })
     }
   }
 

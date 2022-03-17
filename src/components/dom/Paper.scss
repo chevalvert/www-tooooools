@@ -1,4 +1,4 @@
-.playground-poster {
+.paper {
   position: relative;
 
   display: flex;
@@ -7,40 +7,32 @@
   align-self: center;
 
   svg {
-    object-fit: contain;
     width: 100%;
     height: auto;
-    max-height: calc(100vh - var(--gutter) * 6);
+
     overflow: hidden;
 
     .bounding-box,
+    .bounds,
     .guide {
       display: none;
     }
   }
 
-  &__format {
+  .paper-info {
     position: absolute;
     bottom: -1em;
-    font-size: var(--font-size--small);
-
     transform: translateY(100%);
 
-    .format-label {
-      font-weight: bold;
-    }
-
-    // TODO: download-link
-    .format-file {
-      cursor: pointer;
-      color: var(--blue);
-      text-decoration: underline;
+    @include mobile {
+      position: static;
+      transform: none;
+      margin: 1em 0;
     }
   }
 }
 
-.playground-poster.debug svg {
-  outline: 1px solid var(--black);
+.paper.debug svg {
   .guide,
   .no-export,
   .debug {
@@ -66,5 +58,6 @@
     stroke-width: 1px;
   }
   .debug { stroke: #9a1fff; }
+  .paper__background { stroke: black; stroke-dasharray: 1 1; }
   .bounding-box { stroke: #4b96ff; stroke-dasharray: 1 1; }
 }

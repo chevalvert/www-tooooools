@@ -48,7 +48,7 @@
   }
 
   a {
-    font-size: var(--font-size--small);
+    @include font-size(small);
     &:not(:hover) {
       text-decoration: none;
     }
@@ -65,9 +65,10 @@
     margin-bottom: -2px;
   }
 
-  // Increase the transition duration when scrolling up to avoid visual noise
+  // Increase the transition when scrolling up to avoid visual noise
   &.is-forced-visible,
   &.is-forced-visible .flexgroup {
+    transition-delay: 200ms;
     transition-duration: 500ms;
   }
 }

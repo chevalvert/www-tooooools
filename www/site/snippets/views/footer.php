@@ -6,7 +6,7 @@
   <div class='flexgroup'>
     <?php foreach($kirby->languages() as $language) : ?>
       <?php if ($language === $kirby->language()) continue ?>
-      <a href='<?= $language->url() ?>' hreflang='<?= $language->code() ?>'>
+      <a href='<?= $page->url($language->code()) ?>' hreflang='<?= $language->code() ?>'>
         <?= Str::lower($language->name()) ?>
       </a>
     <?php endforeach ?>
@@ -15,7 +15,7 @@
       <a href='<?= $legals->url() ?>'><?= $legals->title() ?></a>
     <?php endif ?>
 
-    <a href='#' id='go-top'>&uarr;</a>
+    <a href='#top' id='go-up'>&uarr;</a>
   </div>
 </nav>
 </footer>

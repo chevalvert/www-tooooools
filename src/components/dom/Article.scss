@@ -1,4 +1,5 @@
 .article {
+  @include font-size;
   margin: 0 auto;
   max-width: var(--max-width--article);
 
@@ -13,22 +14,37 @@
     }
   }
 
-  h2 {
-    font-size: 180%;
+  // Heading levels should start at h3 on article (h1 = website, h2 = page)
+  h1 {}
+  h2 {}
+
+  h3 {
+    font-size: 2em;
+    line-height: 1.2;
+  }
+
+  h4 {
+    font-size: 1.5em;
+    line-height: 1.2;
+  }
+
+  h5 {
+    font-size: 1em;
+    line-height: 1.2;
+    font-weight: bold;
+  }
+
+  h6 {
+    font-size: 0.8em;
+    line-height: 1.2;
     font-weight: bold;
   }
 
   h3, h4, h5, h6 {
-    margin: 2em 0;
-    padding-right: var(--gutter);
+    margin: 3em 0 1em;
   }
 
-  h3 { font-size: var(--font-size--large); line-height: 1.1; }
-  h4 { font-size: var(--font-size--large); line-height: 1.2; }
-  h5 { font-size: var(--font-size); line-height: 1.3; font-weight: bold; }
-  h6 { font-size: var(--font-size); line-height: 1.3; }
-
-  table, img, ul, ol, p, pre, figure, blockquote {
+  table, img, ul, ol, p, blockquote {
     margin: 1em 0;
   }
 
@@ -45,7 +61,7 @@
   }
 
   figure, pre, .gallery {
-    margin: 2em calc(-2 * var(--gutter));
+    margin: calc(2 * var(--gutter)) calc(-2 * var(--gutter));
 
     @include mobile {
       margin-left: 0;
@@ -66,8 +82,9 @@
   }
 
   figure figcaption {
+    @include font-size(small);
+
     text-align: center;
-    font-size: var(--font-size--small);
     color: var(--dimmed-text);
     margin-top: 1em;
     padding: 0 calc(2 * var(--gutter));
@@ -85,8 +102,12 @@
     li {
       flex: 1;
       display: flex;
-      min-width: 25%;
       aspect-ratio: 1;
+      min-width: 25%;
+
+      @include mobile {
+        min-width: 33%;
+      }
     }
 
     figure {
@@ -147,7 +168,7 @@
   }
 
   blockquote {
-    margin: 2em 0;
+    margin: 3em 0;
     font-size: 110%;
     line-height: 1.5;
     font-style: italic;
@@ -168,8 +189,8 @@
     }
 
     footer {
+      @include font-size(small);
       margin-top: 1em;
-      font-size: var(--font-size--small);
       font-style: normal;
       text-align: right;
       &::before {

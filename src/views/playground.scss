@@ -1,26 +1,48 @@
 .view[data-view=playground] {
-  --background: var(--lightgray);
+  // <Paper> adds an artifical margin-bottom matching its format block height,
+  // to avoid overlapping issue with next view while keeping its format block
+  // absolute so that the text ui keeps being vertically centered
+  --format-height: calc(3em);
+  .view__content::after {
+    content: '';
+    display: block;
+    height: var(--format-height, 0);
 
-  min-height: 100vh;
+    @include mobile {
+      display: none;
+    }
+  }
 
-  .view__content {
+  h2 {
+    @include font-size(large);
+    text-align: center;
+    margin-bottom: var(--vertical-spacing);
+
+    @include mobile {
+      @include font-size(large);
+    }
+  }
+
+  .playground__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--gutter);
 
-    & > * {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      flex: 1;
+    @include mobile {
+      grid-template-columns: 1fr;
     }
   }
 
-  .playground-poster {
-    order: -1;
+  .paper {
+    max-height: calc(100vh - var(--format-height) - var(--vertical-spacing));
+  }
+
+  .playground__ui {
+    align-self: center;
   }
 
   p {
+    @include no-select;
     padding-right: var(--gutter);
   }
 

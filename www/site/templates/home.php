@@ -17,7 +17,7 @@
         // TODO: $fragment->illustration
         Html::tag('div', null, ['class' => 'fake-svg']),
         Html::tag('div', [
-          Html::tag('h2', [$fragment->title()->widont()]),
+          Html::tag('h2', [preg_replace('/<br\/?>/', '<span class="desktop-br"></span>', $fragment->title()->widont())]),
           $fragment->text()->widont()
         ])
       ];
@@ -29,13 +29,15 @@
       ]);
     }
 
-    // TODO[next]
-    snippet('components/View', ['view' => 'playground']);
-
-    snippet('components/View', ['view' => 'keywords', 'class' => 'has-separator']);
-    snippet('components/View', ['view' => 'projects', 'class' => 'has-separator']);
-    snippet('components/View', ['view' => 'contact', 'class' => 'has-separator']);
-    snippet('components/View', ['view' => 'footer', 'class' => 'has-separator']);
+    snippet('components/View', ['view' => 'playground', 'class' => 'transparent']);
+    snippet('components/View', ['view' => 'keywords']);
+    snippet('components/View', [
+      'view' => 'projects',
+      'class' => 'transparent',
+      'title' => $page->projects_title()->widont()
+    ]);
+    snippet('components/View', ['view' => 'contact', 'class' => 'transparent has-separator']);
+    snippet('components/View', ['view' => 'footer', 'class' => 'transparent has-separator']);
   ?>
 </main>
 

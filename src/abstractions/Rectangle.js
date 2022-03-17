@@ -92,6 +92,8 @@ export default class Rectangle {
       ? isFinite(this.height)
         ? <rect x={this.x} y={this.y} width={this.width} height={this.height} {...props} />
         : <line x1={this.x} x2={this.x + this.width} y1={this.y} y2={this.y} {...props} />
-      : <line x1={this.x} x2={this.x} y1={this.y} y2={this + this.height} {...props} />
+      : isFinite(this.height)
+        ? <line x1={this.x} x2={this.x} y1={this.y} y2={this.height} {...props} />
+        : null
   }
 }

@@ -5,7 +5,7 @@
   $style = $style ?? '';
 
   // string|array
-  $content = $content ?? snippet("views/$view", [], true);
+  $content = $content ?? snippet("views/$view", $data ?? [], true);
   if (!$content) return;
 ?>
 

@@ -1,8 +1,8 @@
 .view[data-view=projects] {
-  --background: var(--lightgray);
-
   h2 {
-    margin-bottom: var(--gutter);
+    @include font-size(large);
+    text-align: center;
+    margin-bottom: var(--vertical-spacing);
   }
 
   .projects {
@@ -10,24 +10,32 @@
     scroll-snap-type: x mandatory;
     display: flex;
     gap: var(--gutter);
+
+    @include mobile {
+      scroll-behavior: smooth;
+    }
   }
 
   nav {
     @include no-select;
-    font-size: var(--font-size);
     white-space: nowrap;
     margin-left: -0.7rem;
     margin-bottom: 1em;
 
     @include mobile {
-      // ???
-      display: none;
+      @include font-size(large);
+      text-align: center;
     }
   }
 
   nav button {
     position: relative;
     width: var(--gutter);
+
+    @include mobile {
+      display: none;
+    }
+
     &::after {
       @include inset(-1rem);
       content: '';
@@ -37,7 +45,34 @@
   nav button:first-child::after { right: 0; }
   nav button:last-child::after { left: 0; }
 
+  .projects__dots {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+    padding: 0 var(--gutter);
+
+    @include desktop {
+      display: none;
+    }
+  }
+
+  .projects__dot {
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    &::before {
+      @include inset(-0.8rem);
+      content: '';
+    }
+  }
+
+  .projects__dot:not(.is-active) {
+    opacity: 0.2;
+  }
+
   .project {
+    position: relative;
     flex: 0;
     min-width: 100%;
     scroll-snap-align: start;
@@ -67,13 +102,12 @@
     }
 
     &__abstract {
-      align-self: center;
-
       header {
-        font-size: var(--font-size--small);
+        @include font-size(small);
+        margin-bottom: var(--gutter);
+
         border-bottom: 1px solid;
         padding-bottom: var(--gutter);
-        margin-bottom: var(--gutter);
 
         @include mobile {
           border: 0;
@@ -82,9 +116,9 @@
       }
 
       h3 {
-        font-size: var(--font-size--large);
-        line-height: 1.2;
+        @include font-size(large);
         margin-bottom: var(--gutter);
+        padding-right: var(--gutter);
         overflow: hidden;
         text-overflow: ellipsis;
 
@@ -95,10 +129,11 @@
 
       p {
         margin-top: 1em;
+        padding-right: var(--gutter);
       }
 
       footer {
-        font-size: var(--font-size--small);
+        @include font-size(small);
         margin-top: var(--gutter);
       }
     }

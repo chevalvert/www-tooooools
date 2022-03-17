@@ -1,7 +1,27 @@
-// TODO: improve style
 .pswp {
+  cursor: zoom-out;
+  cursor: url('/assets/cursors/close.png'), auto;
+
   &__bg {
     background-color: var(--lightgray);
+  }
+
+  // We use the top-bar to intercept close clicks
+  &__top-bar {
+    background: none !important;
+    opacity: 1 !important;
+    height: 100vh;
+    cursor: url('/assets/cursors/close.png'), auto;
+    display: flex !important;
+    justify-content: center;
+  }
+
+  &__button--close {
+    background-image: url('/assets/cursors/close.png') !important;
+    background-size: auto !important;
+    background-position: center !important;
+    height: var(--navbar-height);
+    padding: 0 var(--gutter);
   }
 
   &__img {
@@ -9,35 +29,24 @@
     padding: var(--gutter);
   }
 
-  &__counter {
-    color: var(--black);
-  }
-
-  &__caption {
-    @include no-select;
-    background-color: var(--lightgray) !important;
-    opacity: 0.9;
-    &__center {
-      font-size: var(--font-size);
-      line-height: var(--line-height);
-      text-align: center;
-      color: var(--black) !important;
-      padding: var(--gutter);
-    }
-  }
-
   &__button {
-    filter: invert(1);
-
     &--arrow--left,
     &--arrow--right {
-      margin: 0;
-    }
-  }
+      z-index: 2;
+      margin-top: 0;
+      top: 0;
+      height: 100vh;
+      width: 33vw;
 
-  &__top-bar {
-    background: none !important;
-    opacity: 1 !important;
-    display: table !important;
+      &::before { content: none; }
+    }
+
+    &--arrow--left {
+      cursor: url('/assets/cursors/prev.png'), auto;
+    }
+
+    &--arrow--right {
+      cursor: url('/assets/cursors/next.png'), auto;
+    }
   }
 }

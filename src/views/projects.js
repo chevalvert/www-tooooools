@@ -2,30 +2,28 @@ import { clamp } from 'missing-math'
 
 const view = document.getElementById('projects')
 view && (() => {
-  const container = document.getElementById('jsProjects')
-  const prevButtons = container.querySelectorAll('[data-action=prev]')
-  const nextButtons = container.querySelectorAll('[data-action=next]')
+  const scrollContainer = view.querySelector('ul.projects')
+  const prevButtons = scrollContainer.querySelectorAll('[data-action=prev]')
+  const nextButtons = scrollContainer.querySelectorAll('[data-action=next]')
+  const jumpButtons = scrollContainer.querySelectorAll('[data-action=jump]')
 
-  if (container) {
-    for (const prev of prevButtons) prev.addEventListener('click', e => scroll(-1))
-    for (const next of nextButtons) next.addEventListener('click', e => scroll(+1))
+  for (const prev of prevButtons) prev.addEventListener('click', e => scroll(-1))
+  for (const next of nextButtons) next.addEventListener('click', e => scroll(+1))
+  for (const jump of jumpButtons) jump.addEventListener('click', e => goTo(jump.dataset.index))
 
-    window.addEventListener('DOMContentLoaded', e => scroll())
-    container.addEventListener('scroll', e => scroll())
+  function goTo (index) {
+    const { width } = scrollContainer.getBoundingClientRect()
+    console.log(index, width, width * index)
+    scrollContainer.scrollLeft = width * index
   }
 
   function scroll (direction) {
-    const { width } = container.getBoundingClientRect()
+    const { width } = scrollContainer.getBoundingClientRect()
 
-    if (direction) {
-      container.scrollLeft = clamp(
-        container.scrollLeft + Math.sign(direction) * width,
-        0,
-        container.scrollWidth
-      )
-    }
-
-    for (const prev of prevButtons) prev.toggleAttribute('disabled', container.scrollLeft <= 0)
-    for (const next of nextButtons) next.toggleAttribute('disabled', container.scrollLeft >= container.scrollWidth - width)
+    scrollContainer.scrollLeft = clamp(
+      scrollContainer.scrollLeft + Math.sign(direction) * width,
+      0,
+      scrollContainer.scrollWidth
+    )
   }
 })()

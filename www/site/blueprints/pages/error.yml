@@ -1,0 +1,7 @@
+title: Page d’erreur
+icon: code
+
+fields:
+  text:
+    label: Texte
+    type: writer

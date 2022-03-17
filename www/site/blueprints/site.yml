@@ -16,11 +16,6 @@ fields:
     counter: true
     maxlength: 150
     spellcheck: true
-  mail:
-    label: Email
-    type: email
-    width: 1/2
-    translate: false
   keywords:
     label: Mots-clefs
     icon: code
@@ -31,4 +26,6 @@ files:
   image:
     cover: true
 pages:
-  image: false
+  image:
+    color: white
+    back: black

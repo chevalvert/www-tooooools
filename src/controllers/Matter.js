@@ -1,18 +1,19 @@
 import 'pathseg'
 import MatterAttractors from 'matter-attractors'
 import decomp from 'poly-decomp'
-import clone from 'clone'
 import { map } from 'missing-math'
 import { Bodies, Body, Common, Composite, Engine, Render, use } from 'matter-js'
 import randomOf from 'utils/array-random'
 
-use(MatterAttractors)
-Common.setDecomp(decomp)
+import Nut from 'components/svg/Nut'
 
-const COLLISIONS = {
-  none: 0x0000,
-  nuts: 0x0002
-}
+Common.setDecomp(decomp)
+Common.logLevel = 3
+
+use(MatterAttractors)
+
+const SHAPES_DISTRIBUTION = ['square', 'hex', 'hex', 'hex', 'circle', 'circle']
+const COLLISIONS = { none: 0x0000, nuts: 0x0002 }
 
 export const Attractor = {
   plugin: {
@@ -43,6 +44,7 @@ export default (element, {
   anchors = undefined
 } = {}) => {
   const IS_SVG = element instanceof window.SVGElement
+  const IS_FIXED = ['sticky', 'fixed'].includes(window.getComputedStyle(element).position)
 
   element.classList.add('has-matter')
   element.classList.toggle('has-wireframe', debug)
@@ -89,6 +91,11 @@ export default (element, {
       const [xoff, yoff] = [2, 5]
       const position = { x: e.pageX + xoff, y: e.pageY + yoff }
 
+      if (IS_FIXED) {
+        position.x -= document.documentElement.scrollLeft
+        position.y -= document.documentElement.scrollTop
+      }
+
       if (IS_SVG) {
         const bbox = element.getBBox()
         const rect = element.getBoundingClientRect()
@@ -114,13 +121,10 @@ export default (element, {
     get bodies () { return engine.world.bodies },
     get randomNut () {
       const nuts = engine.world.bodies.filter(body => body.label === 'nut').slice(0, 3)
-      const clonedNut = Object.assign(
-        clone(randomOf(nuts), true),
-        { id: Common.nextId() }
-      )
-
-      Body.setAngle(clonedNut, Math.random() * Math.PI)
-      return clonedNut
+      const nut = randomOf(nuts)
+      return (nut && nut.clone)
+        ? nut.clone()
+        : nutBody()
     },
 
     update: dt => Engine.update(engine, dt),
@@ -141,7 +145,13 @@ export default (element, {
 
     // Add a Matter body to the simulation
     add: (body, position) => {
-      if (position) Body.setPosition(body, { x: position[0], y: position[1] })
+      if (position) {
+        if (IS_FIXED) {
+          position[0] -= document.documentElement.scrollLeft
+          position[1] -= document.documentElement.scrollTop
+        }
+        Body.setPosition(body, { x: position[0], y: position[1] })
+      }
       Composite.add(engine.world, body)
       return body
     },
@@ -157,7 +167,7 @@ export default (element, {
       const { left, top, width, height } = element.getBoundingClientRect()
       const [x, y] = [
         left + width / 2,
-        top + height / 2 + document.documentElement.scrollTop
+        top + height / 2
       ]
 
       const body = isNut
@@ -259,16 +269,18 @@ export default (element, {
   }
 
   function nutBody (x = width / 2, y = height / 2, diameter = 60, {
-    sides = 6,
-    angle = Math.PI / 2,
+    shape = randomOf(SHAPES_DISTRIBUTION),
+    angle = Math.random() * Math.PI,
     fill = 'black',
     stroke = 'none',
     strokeWidth = 0
   } = {}) {
-    let radius = diameter / 2
-    if (sides === 4) radius /= Math.cos(Math.PI / sides)
+    const sides = { square: 4, hex: 6, circle: 12 }[shape]
 
-    return Bodies.polygon(x, y, sides, radius, Object.assign({
+    let radius = diameter / 2
+    if (shape === 'square') radius /= Math.cos(Math.PI / sides)
+
+    const nut = Bodies.polygon(x, y, sides, radius, Object.assign({
       label: 'nut',
       angle,
       collisionFilter: {
@@ -282,7 +294,7 @@ export default (element, {
             width='${diameter}'
             height='${diameter}'
             viewBox='-2 -2 104 104'%3E
-              %3Cpath d='M22.011,50C22.011,34.542 34.543,22.012 50.001,22.012C65.459,22.012 77.989,34.542 77.989,50C77.989,65.458 65.459,77.99 50.001,77.99C34.543,77.99 22.011,65.458 22.011,50M93.3,74.999L93.3,24.999L50.001,0L6.7,24.999L6.7,74.999L50.001,100L93.3,74.999Z'
+              %3Cpath d='${Nut.PATHS[shape]}'
               vector-effect='non-scaling-stroke'
               stroke-width='${strokeWidth}'
               stroke='${stroke.replace('#', '%23')}'
@@ -292,5 +304,15 @@ export default (element, {
         }
       }
     }, nuts || {}))
+
+    nut.clone = (exact = false) => nutBody(x, y, diameter, {
+      shape: exact ? shape : undefined,
+      angle: exact ? angle : undefined,
+      fill,
+      stroke,
+      strokeWidth
+    })
+
+    return nut
   }
 }

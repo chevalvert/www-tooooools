@@ -1,5 +1,5 @@
 .button {
-  @include easing(300ms, outline, true);
+  @include easing(120ms, transform, true);
 
   --scale: 1;
   --offset-x: 0;
@@ -8,24 +8,30 @@
 
   display: inline;
   outline: 1px solid transparent;
-  // color: black;
   background: var(--theme) !important;
+  transform: translate3d(var(--offset-x, 0), var(--offset-y, 0), 0) scale(var(--scale)) translateY(var(--pressed));
+  transform-origin: center;
 
-  &, &::before {
-    transition: 120ms transform, 300ms outline;
-    transition-timing-function: cubic-bezier(.215,.61,.355,1);
-    will-change: transform;
-    transform: translate3d(var(--offset-x, 0), var(--offset-y, 0), 0) scale(var(--scale)) translateY(var(--pressed));
-    transform-origin: center;
+  &:hover {
+    outline: 1px solid var(--black) !important;
   }
 
-  &.is-hover {
-    outline: 1px solid var(--black);
+  &:not(.is-sticked) {
+    transition-duration: 300ms;
+    transition-timing-function: cubic-bezier(0,3,0.5,0);
   }
 
   &:active {
     --scale: 0.9;
     --pressed: 3px;
+  }
+
+  &.is-loading {
+    outline: 1px solid var(--black);
+    color: transparent;
+    &::after {
+      @include loader(1em, 1px);
+    }
   }
 }
 
@@ -41,11 +47,19 @@ button.button {
 input[type=checkbox].button {
   @include reset-button;
   position: relative;
-  padding: 0 0.5em;
-  cursor: pointer;
-  overflow: hidden;
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -3px;
 
-  &:before {
+  cursor: pointer;
+
+  &::after {
+    @include inset(-0.25em);
+    content: '';
+  }
+
+  &::before {
     content: '✓';
     opacity: 0;
     left: 0;

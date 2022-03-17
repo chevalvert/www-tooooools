@@ -1,3 +1,1 @@
-<p>
-  Interessé ? <a class='cta' href='mailto:<?= $site->mail() ?>'>Contactez-nous !</a>
-</p>
+<?= page('home')->contact_text()->kirbytext() ?>

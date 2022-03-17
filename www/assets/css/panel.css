@@ -1,4 +1,4 @@
 [data-language=en] .k-topbar {
-  --bg: #1ea1ed;
+  --bg: var(--color-notice);
   --color-white: black;
 }

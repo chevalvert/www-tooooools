@@ -26,7 +26,7 @@ export default class Text extends Component {
   template (props, state) {
     return [
       state.bbox.vnode({ class: 'bounding-box no-export' }),
-      <path d={state.d} class={classnames('text', props.class)} fill={props.color} />,
+      <path d={state.d} class={classnames('text', props.class)} fill={props.color} {...props.attributes || {}} />,
       <line class='guide guide--baseline no-export' x1='0%' y1={props.y} x2='100%' y2={props.y} />
     ]
   }

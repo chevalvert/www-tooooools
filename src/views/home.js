@@ -1,6 +1,5 @@
 import raf from '@internet/raf'
-import Matter, { Attractor } from 'controllers/Matter'
-import randomOf from 'utils/array-random'
+import Matter from 'controllers/Matter'
 
 const view = document.getElementById('home')
 view && (() => {
@@ -14,13 +13,9 @@ view && (() => {
 
   const simulation = Matter(view, {
     render: true,
+    timeScale: 1,
     debug: window.location.hash === '#debug',
-    ...randomOf([
-      { mouse: true },
-      { anchors: Attractor, mouse: true },
-      { anchors: Attractor, mouse: Attractor },
-      { anchors: Attractor, mouse: Attractor, nuts: Attractor }
-    ])
+    mouse: true
   })
 
   for (const el of view.querySelectorAll('h1 svg path')) {
@@ -34,11 +29,15 @@ view && (() => {
       isNut,
       isStatic: !isNut,
       keepAnchor: isNut,
-      style: isNut && window.getComputedStyle(el)
+      style: isNut && Object.assign(window.getComputedStyle(el), {
+        shape: 'hex',
+        angle: Math.PI / 2
+      })
     })
   }
 
-  window.addEventListener('resize', start, { once: true })
+  window.addEventListener('DOMContentLoaded', () => window.setTimeout(start, 500), { once: true })
+
   view.addEventListener('click', e => {
     start()
     simulation.add(simulation.randomNut, [e.pageX, e.pageY])
@@ -50,5 +49,11 @@ view && (() => {
     simulation.isRunning = true
     view.classList.add('has-running-matter')
     raf.add(simulation.update)
+
+    for (let i = 0; i < 20; i++) {
+      window.setTimeout(() => {
+        simulation.add(simulation.randomNut)
+      }, i * (50 + Math.random() * 100))
+    }
   }
 })()

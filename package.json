@@ -56,9 +56,14 @@
   "dependencies": {
     "@internet/raf": "^0.2.1",
     "base64-js": "^1.5.1",
+    "bowser": "^2.11.0",
     "classnames": "^2.3.1",
     "clone": "^2.1.2",
+    "file-saver": "^2.0.5",
+    "hex-rgb": "^5.0.0",
     "highlight.js": "^11.4.0",
+    "jszip": "^3.7.1",
+    "lozad": "^1.16.0",
     "matter-attractors": "^0.1.6",
     "matter-js": "^0.18.0",
     "missing-math": "^3.2.0",
@@ -68,6 +73,7 @@
     "poly-decomp": "^0.3.0",
     "smoothscroll-polyfill": "^0.4.4",
     "throttle-debounce": "^3.0.1",
+    "transformation-matrix": "^2.11.1",
     "wrappable-text": "^1.2.1"
   }
 }

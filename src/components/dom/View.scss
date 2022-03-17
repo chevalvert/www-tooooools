@@ -3,9 +3,7 @@
   z-index: 1;
 
   width: 100vw;
-  padding:
-    calc(var(--navbar-height) + var(--gutter))
-    var(--gutter);
+  padding: var(--vertical-spacing) var(--gutter);
 
   background: var(--background, var(--theme));
   color: var(--color, var(--black));
@@ -19,6 +17,10 @@
 
   &:empty {
     display: none;
+  }
+
+  &.transparent {
+    --background: var(--lightgray);
   }
 
   &.has-separator::before {
