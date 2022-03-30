@@ -41,7 +41,7 @@ Thumbs.db
 # Prevent custom plugins to be ignored
 !/www/site/plugins/.gitkeep
 !/www/site/plugins/kirby-webpack
-!/www/site/plugins/YOUR_NAMESPACE-*
+!/www/site/plugins/toools-*
 
 # Kirby Temporary files
 /www/media/*
