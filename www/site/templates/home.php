@@ -41,4 +41,6 @@
   ?>
 </main>
 
+<?= js('assets/builds/common.js') ?>
+<?= js('assets/builds/home.js') ?>
 <?php snippet('html/footer') ?>

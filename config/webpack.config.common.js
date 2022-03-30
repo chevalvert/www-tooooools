@@ -5,7 +5,9 @@ const root = path.join(__dirname, '..')
 
 module.exports = {
   entry: {
-    'assets/builds/bundle.js': [path.join(root, 'src', 'index.js')],
+    'assets/builds/common.js': [path.join(root, 'src', 'templates', 'common.js')],
+    'assets/builds/home.js': [path.join(root, 'src', 'templates', 'home.js')],
+    'assets/builds/project.js': [path.join(root, 'src', 'templates', 'project.js')],
     'assets/builds/bundle.css': [path.join(root, 'src', 'index.scss')]
   },
 

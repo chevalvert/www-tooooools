@@ -13,4 +13,5 @@
   ?>
 </main>
 
+<?= js('assets/builds/common.js') ?>
 <?php snippet('html/footer') ?>

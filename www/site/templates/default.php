@@ -24,5 +24,5 @@
   ?>
 </main>
 
-<?php snippet('components/Photoswipe') ?>
+<?= js('assets/builds/common.js') ?>
 <?php snippet('html/footer') ?>

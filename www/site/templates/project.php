@@ -45,4 +45,7 @@
 </main>
 
 <?php snippet('components/Photoswipe') ?>
+
+<?= js('assets/builds/common.js') ?>
+<?= js('assets/builds/project.js') ?>
 <?php snippet('html/footer') ?>
