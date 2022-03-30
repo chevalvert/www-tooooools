@@ -5,17 +5,6 @@
     margin-bottom: var(--vertical-spacing);
   }
 
-  .projects {
-    @include invisible-scroll;
-    scroll-snap-type: x mandatory;
-    display: flex;
-    gap: var(--gutter);
-
-    @include mobile {
-      scroll-behavior: smooth;
-    }
-  }
-
   nav {
     @include no-select;
     white-space: nowrap;

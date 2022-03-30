@@ -5,47 +5,51 @@
 
 <?php if ($title) echo Html::tag('h2', [$title]) ?>
 
-<ul class='projects'>
-  <?php foreach ($projects as $project) : ?>
-    <li class='project'>
-      <div class='project__content'>
-        <a href='<?= $project->url() ?>'>
-          <?php snippet('html/image', [
-            'image' => $project->abstract_cover()->toFile(),
-            'preset' => 'abstract'
-          ]) ?>
-        </a>
-        <div class='project__abstract'>
-          <nav>
-            <button data-action='prev' <?= $projects->indexOf($project) === 0 ? 'disabled' : '' ?>>←</button>
-            <button data-action='next' <?= $projects->indexOf($project) === $projects->count() - 1 ? 'disabled' : '' ?>>→</button>
+<div class='splide'>
+  <div class='splide__track'>
+    <ul class='splide__list'>
+      <?php foreach ($projects as $project) : ?>
+        <li class='project splide__slide'>
+          <div class='project__content'>
+            <a href='<?= $project->url() ?>'>
+              <?php snippet('html/image', [
+                'image' => $project->abstract_cover()->toFile(),
+                'preset' => 'abstract'
+              ]) ?>
+            </a>
+            <div class='project__abstract'>
+              <nav>
+                <button data-action='prev' <?= $projects->indexOf($project) === 0 ? 'disabled' : '' ?>>←</button>
+                <button data-action='next' <?= $projects->indexOf($project) === $projects->count() - 1 ? 'disabled' : '' ?>>→</button>
 
-            <ul class='projects__dots'>
-              <?php foreach ($projects as $p) : ?>
-                <li class='projects__dot <?= $p === $project ? 'is-active' : '' ?>' data-action='jump' data-index='<?= $projects->indexOf($p) ?>'>&bull;</li>
-              <?php endforeach ?>
-            </ul>
-          </nav>
+                <ul class='projects__dots'>
+                  <?php foreach ($projects as $p) : ?>
+                    <li class='projects__dot <?= $p === $project ? 'is-active' : '' ?>' data-action='jump' data-index='<?= $projects->indexOf($p) ?>'>&bull;</li>
+                  <?php endforeach ?>
+                </ul>
+              </nav>
 
-          <h3><a href='<?= $project->url() ?>'><?= $project->title()->widont() ?></a></h3>
+              <h3><a href='<?= $project->url() ?>'><?= $project->title()->widont() ?></a></h3>
 
-          <header>
-            <div><?= $project->year() ?></div>
-            <ul>
-              <?php foreach ($project->keywords()->split() as $keyword) : ?>
-                <li><?= $keyword ?></li>
-              <?php endforeach ?>
-            </ul>
-          </header>
+              <header>
+                <div><?= $project->year() ?></div>
+                <ul>
+                  <?php foreach ($project->keywords()->split() as $keyword) : ?>
+                    <li><?= $keyword ?></li>
+                  <?php endforeach ?>
+                </ul>
+              </header>
 
-          <div>
-            <?= $project->abstract()->widont() ?>
+              <div>
+                <?= $project->abstract()->widont() ?>
+              </div>
+              <footer>
+                <a href='<?= $project->url() ?>'>Lire l’étude de cas</a>
+              </footer>
+            </div>
           </div>
-          <footer>
-            <a href='<?= $project->url() ?>'>Lire l’étude de cas</a>
-          </footer>
-        </div>
-      </div>
-    </li>
-  <?php endforeach ?>
-</ul>
+        </li>
+      <?php endforeach ?>
+    </ul>
+  </div>
+</div>

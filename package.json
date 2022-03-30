@@ -55,6 +55,8 @@
   },
   "dependencies": {
     "@internet/raf": "^0.2.1",
+    "@splidejs/splide": "^3.6.12",
+    "@splidejs/splide-extension-intersection": "^0.1.6",
     "base64-js": "^1.5.1",
     "bowser": "^2.11.0",
     "classnames": "^2.3.1",
