@@ -1,4 +1,4 @@
-import * as Opentype from 'opentype.js'
+import { Path } from 'opentype.js'
 import Rectangle from 'abstractions/Rectangle'
 
 export default class BoundingBox {
@@ -31,7 +31,7 @@ export default class BoundingBox {
   }
 
   static fromOpentypePath (path) {
-    if (!(path instanceof Opentype.Path)) {
+    if (!(path instanceof Path)) {
       throw new TypeError('Path should be a valid Opentype.Path instance')
     }
 

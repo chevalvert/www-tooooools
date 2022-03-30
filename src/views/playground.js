@@ -1,4 +1,4 @@
-import * as Opentype from 'opentype.js'
+import { load as loadOpenType } from 'opentype.js'
 import { render } from 'utils/jsx'
 import { readable, writable } from 'utils/state'
 import { Signal } from 'utils/state/signal'
@@ -19,7 +19,7 @@ view && (async () => {
   // Preload Opentype fonts
   for (const id in Store.fonts.get()) {
     Store.fonts.current[id] = await new Promise(resolve => {
-      Opentype.load(Store.fonts.current[id], (error, font) => {
+      loadOpenType(Store.fonts.current[id], (error, font) => {
         if (error) throw error
         font.id = id
         resolve(font)
