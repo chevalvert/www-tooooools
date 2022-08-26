@@ -36,11 +36,10 @@ fields:
         label: Texte
         type: writer
         required: true
-      # TODO
-      # illustration:
-      #   label: Illustration
-      #   type: files
-      #   required: true
+      illustration:
+        label: Illustration
+        type: files
+        required: true
 
   --2:
     label: Playground

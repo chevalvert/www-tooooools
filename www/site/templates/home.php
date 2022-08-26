@@ -13,14 +13,23 @@
     ]);
 
     foreach ($page->introduction()->toStructure() as $index => $fragment) {
-      $content = [
-        // TODO: $fragment->illustration
-        Html::tag('div', null, ['class' => 'fake-svg']),
-        Html::tag('div', [
-          Html::tag('h2', [preg_replace('/<br\/?>/', '<span class="desktop-br"></span>', $fragment->title()->widont())]),
-          $fragment->text()->widont()
-        ])
-      ];
+      $content = [];
+
+      if ($illustration = $fragment->illustration()->toFile()) {
+        // TODO: lazyload
+        $content[] = $illustration->type() === 'image'
+          ? Html::img($illustration->url())
+          : Html::tag('video', [
+            Html::tag('source', null, ['src' => $illustration->url(), 'type' => $illustration->mime()])
+          ], ['autoplay' => true, 'loop' => true, 'muted' => true]);
+      } else {
+        $content[] = Html::tag('div', null, ['class' => 'fake-svg']);
+      }
+
+      $content[] = Html::tag('div', [
+        Html::tag('h2', [preg_replace('/<br\/?>/', '<span class="desktop-br"></span>', $fragment->title()->widont())]),
+        $fragment->text()->widont()
+      ]);
 
       snippet('components/View', [
         'view' => 'intro',
